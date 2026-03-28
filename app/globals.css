@@ -8,14 +8,16 @@
 
 body {
   font-family: 'Public Sans', sans-serif;
+  background-color: #0a0a0a;
+  color: #e2e8f0;
 }
 
 .hero-pattern {
-  background-color: #f6f8f6;
-  background-image: radial-gradient(#2bee6c 0.5px, transparent 0.5px), radial-gradient(#2bee6c 0.5px, #f6f8f6 0.5px);
+  background-color: #0a0a0a;
+  background-image: radial-gradient(#2bee6c 0.5px, transparent 0.5px), radial-gradient(#2bee6c 0.5px, #0a0a0a 0.5px);
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
-  opacity: 0.1;
+  opacity: 0.05;
 }
 
 /* Smooth scrolling */
@@ -29,16 +31,16 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #111111;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #333333;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1a1;
+  background: #555555;
 }
 
 /* Page enter animation */

@@ -50,8 +50,8 @@ export async function GET(req: Request) {
                 const stage = profile.stage || "Early Traction";
                 const tags = [profile.ayushSector, stage];
                 const tagColors = [
-                    sectorColors[profile.ayushSector] || "bg-slate-100 text-slate-600",
-                    stageColors[stage] || "bg-slate-100 text-slate-600",
+                    sectorColors[profile.ayushSector] || "bg-[#141414] text-slate-400",
+                    stageColors[stage] || "bg-[#141414] text-slate-400",
                 ];
 
                 return {
@@ -67,7 +67,7 @@ export async function GET(req: Request) {
                     askNum: parseInt(profile.fundingAsk || "0") || 0,
                     revenue: profile.revenue || "Pre-Revenue",
                     initial: profile.startupName.charAt(0).toUpperCase(),
-                    color: sectorColors[profile.ayushSector] || "bg-slate-100 text-slate-700",
+                    color: sectorColors[profile.ayushSector] || "bg-[#141414] text-slate-300",
                     featured: false,
                     founderName: app.user.name,
                     founderEmail: app.user.email,

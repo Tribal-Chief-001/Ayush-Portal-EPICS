@@ -87,32 +87,32 @@ export default function SupportPage() {
     return (
         <div className="flex h-screen bg-background-light font-display">
             {/* Sidebar */}
-            <aside className="w-72 bg-white border-r border-slate-200 hidden lg:flex flex-col">
-                <div className="p-5 border-b border-slate-100">
+            <aside className="w-72 bg-[#111111] border-r border-white/10 hidden lg:flex flex-col">
+                <div className="p-5 border-b border-white/5">
                     <Link href="/dashboard" className="flex items-center gap-2">
                         <span className="material-icons text-primary-dark text-2xl">spa</span>
-                        <span className="font-bold text-slate-900">AYUSH <span className="text-primary-dark">Portal</span></span>
+                        <span className="font-bold text-slate-100">AYUSH <span className="text-primary-dark">Portal</span></span>
                     </Link>
                 </div>
                 <nav className="flex-1 py-4 overflow-y-auto">
                     <p className="px-5 text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-2">Navigation</p>
-                    <Link href="/dashboard" className="flex items-center gap-3 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50">
+                    <Link href="/dashboard" className="flex items-center gap-3 px-5 py-2.5 text-sm text-slate-400 hover:bg-[#0a0a0a]">
                         <span className="material-icons text-lg">dashboard</span> Dashboard
                     </Link>
                     <Link href="/dashboard/support" className="flex items-center gap-3 px-5 py-2.5 text-sm bg-primary/10 text-primary-dark font-medium border-r-2 border-primary">
                         <span className="material-icons text-lg">smart_toy</span> AI Support
                     </Link>
-                    <Link href="/schemes" className="flex items-center gap-3 px-5 py-2.5 text-sm text-slate-600 hover:bg-slate-50">
+                    <Link href="/schemes" className="flex items-center gap-3 px-5 py-2.5 text-sm text-slate-400 hover:bg-[#0a0a0a]">
                         <span className="material-icons text-lg">library_books</span> Schemes
                     </Link>
 
                     {/* Application Progress */}
-                    <div className="mx-5 mt-6 p-4 bg-slate-50 rounded-xl">
-                        <p className="text-xs font-bold text-slate-500 uppercase mb-3">Your Application</p>
+                    <div className="mx-5 mt-6 p-4 bg-[#0a0a0a] rounded-xl">
+                        <p className="text-xs font-bold text-slate-400 uppercase mb-3">Your Application</p>
                         <div className="flex items-center gap-2 mb-2">
                             <span className="px-2 py-0.5 bg-yellow-100 text-yellow-700 text-[10px] font-bold rounded-full">UNDER REVIEW</span>
                         </div>
-                        <div className="h-2 bg-slate-200 rounded-full overflow-hidden mb-1">
+                        <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-1">
                             <div className="h-full bg-primary rounded-full w-3/4 transition-all duration-1000"></div>
                         </div>
                         <p className="text-[10px] text-slate-400 text-right">75% Complete</p>
@@ -120,15 +120,15 @@ export default function SupportPage() {
 
                     {/* Recommended Schemes */}
                     <div className="mx-5 mt-4">
-                        <p className="text-xs font-bold text-slate-500 uppercase mb-3">Recommended Schemes</p>
+                        <p className="text-xs font-bold text-slate-400 uppercase mb-3">Recommended Schemes</p>
                         <div className="space-y-2">
                             {schemes.map((s) => (
-                                <div key={s.title} className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors">
+                                <div key={s.title} className="flex items-start gap-2 p-2.5 rounded-lg hover:bg-[#0a0a0a] cursor-pointer transition-colors">
                                     <div className={`w-7 h-7 rounded-md ${s.bg} flex items-center justify-center flex-shrink-0`}>
                                         <span className={`material-icons text-sm ${s.color}`}>{s.icon}</span>
                                     </div>
                                     <div>
-                                        <p className="text-xs font-medium text-slate-900">{s.title}</p>
+                                        <p className="text-xs font-medium text-slate-100">{s.title}</p>
                                         <p className="text-[10px] text-slate-400">{s.desc}</p>
                                     </div>
                                 </div>
@@ -141,23 +141,23 @@ export default function SupportPage() {
             {/* Chat Area */}
             <div className="flex-1 flex flex-col">
                 {/* Chat Header */}
-                <header className="bg-white border-b border-slate-200 px-6 py-3 flex justify-between items-center">
+                <header className="bg-[#111111] border-b border-white/10 px-6 py-3 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
                             <span className="material-icons text-primary-dark">smart_toy</span>
                         </div>
                         <div>
-                            <h2 className="font-bold text-sm text-slate-900">AYUSH Assistant</h2>
+                            <h2 className="font-bold text-sm text-slate-100">AYUSH Assistant</h2>
                             <span className="text-xs text-green-500 flex items-center gap-1">
                                 <span className="w-1.5 h-1.5 bg-green-500 rounded-full inline-block"></span> Online
                             </span>
                         </div>
                     </div>
                     <div className="flex items-center gap-2">
-                        <button className="p-2 hover:bg-slate-50 rounded-lg" title="Clear chat" onClick={() => setMessages([{ role: "assistant", text: "Chat cleared! How can I help you?", time: getNow() }])}>
+                        <button className="p-2 hover:bg-[#0a0a0a] rounded-lg" title="Clear chat" onClick={() => setMessages([{ role: "assistant", text: "Chat cleared! How can I help you?", time: getNow() }])}>
                             <span className="material-icons text-slate-400 text-lg">delete_sweep</span>
                         </button>
-                        <Link href="/dashboard" className="p-2 hover:bg-slate-50 rounded-lg">
+                        <Link href="/dashboard" className="p-2 hover:bg-[#0a0a0a] rounded-lg">
                             <span className="material-icons text-slate-400 text-lg">close</span>
                         </Link>
                     </div>
@@ -177,8 +177,8 @@ export default function SupportPage() {
                                     </div>
                                 )}
                                 <div className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-line ${msg.role === "user"
-                                    ? "bg-primary text-slate-900 rounded-br-md"
-                                    : "bg-white border border-slate-100 text-slate-700 rounded-bl-md shadow-sm"
+                                    ? "bg-primary text-slate-100 rounded-br-md"
+                                    : "bg-[#111111] border border-white/5 text-slate-300 rounded-bl-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
                                     }`}>
                                     {msg.text}
                                 </div>
@@ -192,7 +192,7 @@ export default function SupportPage() {
                     {/* Typing Indicator */}
                     {isTyping && (
                         <div className="flex justify-start">
-                            <div className="bg-white border border-slate-100 px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+                            <div className="bg-[#111111] border border-white/5 px-4 py-3 rounded-2xl rounded-bl-md shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                                 <div className="flex gap-1">
                                     <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: "0ms" }}></span>
                                     <span className="w-2 h-2 bg-slate-300 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
@@ -207,16 +207,16 @@ export default function SupportPage() {
                 {/* Quick Suggestions */}
                 <div className="px-6 pb-2 flex gap-2 flex-wrap">
                     {["What is AYUSH?", "Funding options", "How to get certified?", "Export guidance"].map((q) => (
-                        <button key={q} onClick={() => { setMessage(q); }} className="px-3 py-1.5 bg-white border border-slate-200 rounded-full text-xs font-medium text-slate-600 hover:bg-primary/10 hover:border-primary/30 hover:text-primary-dark transition-all">
+                        <button key={q} onClick={() => { setMessage(q); }} className="px-3 py-1.5 bg-[#111111] border border-white/10 rounded-full text-xs font-medium text-slate-400 hover:bg-primary/10 hover:border-primary/30 hover:text-primary-dark transition-all">
                             {q}
                         </button>
                     ))}
                 </div>
 
                 {/* Input */}
-                <div className="bg-white border-t border-slate-200 p-4">
+                <div className="bg-[#111111] border-t border-white/10 p-4">
                     <div className="max-w-4xl mx-auto flex items-center gap-3">
-                        <button className="p-2 hover:bg-slate-50 rounded-lg">
+                        <button className="p-2 hover:bg-[#0a0a0a] rounded-lg">
                             <span className="material-icons text-slate-400">attach_file</span>
                         </button>
                         <input
@@ -225,12 +225,12 @@ export default function SupportPage() {
                             onChange={(e) => setMessage(e.target.value)}
                             onKeyDown={(e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendMessage(); } }}
                             placeholder="Ask me about AYUSH registration, funding, certification..."
-                            className="flex-1 px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                            className="flex-1 px-4 py-2.5 border border-white/10 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
                         />
                         <button
                             onClick={sendMessage}
                             disabled={!message.trim()}
-                            className={`p-2.5 rounded-xl transition-all ${message.trim() ? "bg-primary text-slate-900 hover:bg-primary-dark hover:text-white shadow-sm" : "bg-slate-100 text-slate-400"}`}
+                            className={`p-2.5 rounded-xl transition-all ${message.trim() ? "bg-primary text-slate-100 hover:bg-primary-dark hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)]" : "bg-[#141414] text-slate-400"}`}
                         >
                             <span className="material-icons">send</span>
                         </button>

@@ -114,17 +114,17 @@ export default function AdminPage() {
     return (
         <div className="min-h-screen bg-background-light font-display">
             {/* Header */}
-            <header className="bg-white border-b border-slate-200">
+            <header className="bg-[#111111] border-b border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-900 font-bold text-sm">A</div>
+                        <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-100 font-bold text-sm">A</div>
                         <div className="flex flex-col">
-                            <span className="font-bold text-sm text-slate-900">AYUSH <span className="text-primary-dark">Admin</span></span>
+                            <span className="font-bold text-sm text-slate-100">AYUSH <span className="text-primary-dark">Admin</span></span>
                             <span className="text-[10px] text-slate-400">Review Dashboard</span>
                         </div>
                     </Link>
                     <div className="flex items-center gap-4">
-                        <Link href="/dashboard" className="text-sm text-slate-500 hover:text-slate-700">Dashboard</Link>
+                        <Link href="/dashboard" className="text-sm text-slate-400 hover:text-slate-300">Dashboard</Link>
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                             <span className="material-icons text-primary-dark text-sm">admin_panel_settings</span>
                         </div>
@@ -136,7 +136,7 @@ export default function AdminPage() {
                 {/* Stats Cards */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     {[
-                        { label: "Total Applications", value: counts.all, icon: "description", color: "text-slate-600", bg: "bg-slate-50" },
+                        { label: "Total Applications", value: counts.all, icon: "description", color: "text-slate-400", bg: "bg-[#0a0a0a]" },
                         { label: "Pending Review", value: counts.pending, icon: "pending", color: "text-yellow-600", bg: "bg-yellow-50" },
                         { label: "Approved", value: counts.approved, icon: "check_circle", color: "text-green-600", bg: "bg-green-50" },
                         { label: "Rejected", value: counts.rejected, icon: "cancel", color: "text-red-600", bg: "bg-red-50" },
@@ -144,9 +144,9 @@ export default function AdminPage() {
                         <div key={stat.label} className={`${stat.bg} rounded-xl p-5 border border-slate-100`}>
                             <div className="flex items-center justify-between mb-2">
                                 <span className={`material-icons ${stat.color}`}>{stat.icon}</span>
-                                <span className="text-2xl font-bold text-slate-900">{stat.value}</span>
+                                <span className="text-2xl font-bold text-slate-100">{stat.value}</span>
                             </div>
-                            <p className="text-xs text-slate-500 font-medium">{stat.label}</p>
+                            <p className="text-xs text-slate-400 font-medium">{stat.label}</p>
                         </div>
                     ))}
                 </div>
@@ -155,10 +155,10 @@ export default function AdminPage() {
                     {/* Main Panel */}
                     <div className="flex-1">
                         {/* Toolbar */}
-                        <div className="bg-white rounded-xl border border-slate-100 p-4 mb-6">
+                        <div className="bg-[#111111] rounded-xl border border-white/5 p-4 mb-6">
                             <div className="flex flex-wrap items-center justify-between gap-4">
                                 {/* Search */}
-                                <div className="flex items-center bg-slate-50 rounded-lg border border-slate-200 px-3 flex-1 max-w-sm">
+                                <div className="flex items-center bg-[#0a0a0a] rounded-lg border border-white/10 px-3 flex-1 max-w-sm">
                                     <span className="material-icons text-slate-400 text-lg">search</span>
                                     <input
                                         type="text" value={searchQuery}
@@ -174,8 +174,8 @@ export default function AdminPage() {
                                             key={s}
                                             onClick={() => setStatusFilter(s)}
                                             className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all ${statusFilter === s
-                                                ? "bg-primary text-slate-900"
-                                                : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                                                ? "bg-primary text-slate-100"
+                                                : "bg-[#141414] text-slate-400 hover:bg-slate-800"
                                                 }`}
                                         >
                                             {s} {s === "All" ? `(${counts.all})` : s === "Pending Review" ? `(${counts.pending})` : s === "Approved" ? `(${counts.approved})` : ""}
@@ -186,15 +186,15 @@ export default function AdminPage() {
                         </div>
 
                         {/* Applications Table */}
-                        <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+                        <div className="bg-[#111111] rounded-xl border border-white/5 overflow-hidden">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="bg-slate-50 border-b border-slate-100">
-                                        <th className="text-left text-xs font-bold text-slate-500 uppercase px-5 py-3">Startup</th>
-                                        <th className="text-left text-xs font-bold text-slate-500 uppercase px-5 py-3 hidden md:table-cell">Sector</th>
-                                        <th className="text-left text-xs font-bold text-slate-500 uppercase px-5 py-3 hidden sm:table-cell">Date</th>
-                                        <th className="text-left text-xs font-bold text-slate-500 uppercase px-5 py-3">Status</th>
-                                        <th className="text-center text-xs font-bold text-slate-500 uppercase px-5 py-3">Actions</th>
+                                    <tr className="bg-[#0a0a0a] border-b border-white/5">
+                                        <th className="text-left text-xs font-bold text-slate-400 uppercase px-5 py-3">Startup</th>
+                                        <th className="text-left text-xs font-bold text-slate-400 uppercase px-5 py-3 hidden md:table-cell">Sector</th>
+                                        <th className="text-left text-xs font-bold text-slate-400 uppercase px-5 py-3 hidden sm:table-cell">Date</th>
+                                        <th className="text-left text-xs font-bold text-slate-400 uppercase px-5 py-3">Status</th>
+                                        <th className="text-center text-xs font-bold text-slate-400 uppercase px-5 py-3">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -208,7 +208,7 @@ export default function AdminPage() {
                                                     <div className="flex items-center gap-3">
                                                         <div className={`w-9 h-9 rounded-lg ${app.color} flex items-center justify-center font-bold text-sm`}>{app.initial}</div>
                                                         <div>
-                                                            <p className="font-semibold text-sm text-slate-900">{app.name}</p>
+                                                            <p className="font-semibold text-sm text-slate-100">{app.name}</p>
                                                             <p className="text-xs text-slate-400">{app.id}</p>
                                                         </div>
                                                     </div>
@@ -216,7 +216,7 @@ export default function AdminPage() {
                                                 <td className="px-5 py-4 hidden md:table-cell">
                                                     <span className={`px-2.5 py-0.5 text-xs font-medium rounded-full ${app.sectorColor}`}>{app.sector}</span>
                                                 </td>
-                                                <td className="px-5 py-4 text-sm text-slate-500 hidden sm:table-cell">{app.date}</td>
+                                                <td className="px-5 py-4 text-sm text-slate-400 hidden sm:table-cell">{app.date}</td>
                                                 <td className="px-5 py-4">
                                                     <span className={`px-2.5 py-1 text-xs font-semibold rounded-full ${app.statusColor}`}>{app.status}</span>
                                                 </td>
@@ -250,7 +250,7 @@ export default function AdminPage() {
                                                                 Re-review
                                                             </button>
                                                         )}
-                                                        <button onClick={(e) => { e.stopPropagation(); setExpandedId(expandedId === app.id ? null : app.id); }} className="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg hover:bg-slate-100 transition-colors ml-1">
+                                                        <button onClick={(e) => { e.stopPropagation(); setExpandedId(expandedId === app.id ? null : app.id); }} className="p-1.5 text-slate-400 hover:text-slate-400 rounded-lg hover:bg-[#141414] transition-colors ml-1">
                                                             <span className="material-icons text-sm">{expandedId === app.id ? "expand_less" : "expand_more"}</span>
                                                         </button>
                                                     </div>
@@ -258,16 +258,16 @@ export default function AdminPage() {
                                             </tr>
                                             {expandedId === app.id && (
                                                 <tr key={`${app.id}-details`}>
-                                                    <td colSpan={5} className="bg-slate-50 px-5 py-4 border-b border-slate-100">
+                                                    <td colSpan={5} className="bg-[#0a0a0a] px-5 py-4 border-b border-white/5">
                                                         <div className="grid sm:grid-cols-3 gap-4 text-sm">
                                                             <div>
                                                                 <p className="text-xs text-slate-400 uppercase font-bold mb-1">Founder</p>
-                                                                <p className="text-slate-700">{app.details?.founder}</p>
+                                                                <p className="text-slate-300">{app.details?.founder}</p>
                                                                 <p className="text-xs text-slate-400">{app.details?.email}</p>
                                                             </div>
                                                             <div>
                                                                 <p className="text-xs text-slate-400 uppercase font-bold mb-1">Location</p>
-                                                                <p className="text-slate-700">{app.details?.state}</p>
+                                                                <p className="text-slate-300">{app.details?.state}</p>
                                                             </div>
                                                             <div className="flex flex-col gap-2">
                                                                 <p className="text-xs text-slate-400 uppercase font-bold mb-1">Documents Uploaded</p>
@@ -294,8 +294,8 @@ export default function AdminPage() {
 
                     {/* Right Sidebar — Activity Log */}
                     <aside className="w-72 hidden xl:block">
-                        <div className="sticky top-24 bg-white rounded-xl border border-slate-100 p-5">
-                            <h3 className="font-bold text-sm text-slate-900 mb-4 flex items-center gap-2">
+                        <div className="sticky top-24 bg-[#111111] rounded-xl border border-white/5 p-5">
+                            <h3 className="font-bold text-sm text-slate-100 mb-4 flex items-center gap-2">
                                 <span className="material-icons text-primary-dark text-lg">history</span> Recent Actions
                             </h3>
                             {actionLog.length === 0 ? (
@@ -305,24 +305,24 @@ export default function AdminPage() {
                                     {actionLog.map((log, i) => (
                                         <div key={i} className="flex items-start gap-2">
                                             <span className="w-2 h-2 bg-primary rounded-full mt-1.5 flex-shrink-0"></span>
-                                            <p className="text-xs text-slate-600 leading-relaxed">{log}</p>
+                                            <p className="text-xs text-slate-400 leading-relaxed">{log}</p>
                                         </div>
                                     ))}
                                 </div>
                             )}
 
-                            <div className="mt-6 pt-4 border-t border-slate-100">
-                                <h4 className="font-bold text-xs text-slate-500 uppercase mb-3">Quick Stats</h4>
+                            <div className="mt-6 pt-4 border-t border-white/5">
+                                <h4 className="font-bold text-xs text-slate-400 uppercase mb-3">Quick Stats</h4>
                                 <div className="space-y-2">
                                     <div className="flex justify-between text-sm">
-                                        <span className="text-slate-500">Approval Rate</span>
+                                        <span className="text-slate-400">Approval Rate</span>
                                         <span className="font-bold text-green-600">{counts.all > 0 ? Math.round((counts.approved / counts.all) * 100) : 0}%</span>
                                     </div>
-                                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                                    <div className="h-2 bg-[#141414] rounded-full overflow-hidden">
                                         <div className="h-full bg-green-500 rounded-full transition-all duration-500" style={{ width: `${counts.all > 0 ? (counts.approved / counts.all) * 100 : 0}%` }}></div>
                                     </div>
                                     <div className="flex justify-between text-sm mt-3">
-                                        <span className="text-slate-500">Pending</span>
+                                        <span className="text-slate-400">Pending</span>
                                         <span className="font-bold text-yellow-600">{counts.pending}</span>
                                     </div>
                                 </div>
