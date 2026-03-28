@@ -1,30 +1,20 @@
-import { NextResponse } from "next/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-
-export async function POST(req: Request) {
-    try {
-        if (!process.env.GEMINI_API_KEY) {
-            return NextResponse.json(
-                { error: "GEMINI_API_KEY is not configured in environment variables." },
-                { status: 500 }
-            );
+async function test() {
+    console.log("Starting test 2...");
+    const genAI = new GoogleGenerativeAI("AIzaSyCiCPiaCDVlscHMVFw2SJuB6BxgAROHH_w");
+    const model = genAI.getGenerativeModel({ 
+        model: "gemini-2.5-flash",
+        generationConfig: {
+            responseMimeType: "application/json"
         }
+    });
 
-        const body = await req.json();
-        const { startupName, sector, description } = body;
+    const startupName = "Tesla";
+    const sector = "Automotive";
+    const description = "Electric vehicles and clean energy.";
 
-        if (!startupName) {
-            return NextResponse.json({ error: "Startup name is required" }, { status: 400 });
-        }
-
-        const model = genAI.getGenerativeModel({ 
-            model: "gemini-2.5-flash",
-            generationConfig: { responseMimeType: "application/json" }
-        });
-
-        const prompt = `
+    const prompt = `
         You are an elite OSINT (Open Source Intelligence) Data Engineer and Intelligence Analyst specializing in deep-tech and startup viability analysis.
         
         Analyze the following startup concept based on standard metrics, market physics, regulatory frameworks, and general industry trends:
@@ -73,23 +63,21 @@ export async function POST(req: Request) {
                 { "name": "Competitor 3", "threatLevel": "Low", "marketShare": 5 }
             ]
         }
-        `;
+    `;
 
+    try {
         const result = await model.generateContent(prompt);
-        const response = await result.response;
-        const text = response.text();
-
-        // Clean up markdown code blocks if the model accidentally includes them
-        const cleanedText = text.replace(/```json/g, "").replace(/```/g, "").trim();
+        const text = result.response.text();
+        console.log("RAW OUTPUT:");
+        console.log(text);
         
-        const parsedData = JSON.parse(cleanedText);
-
-        return NextResponse.json(parsedData);
-    } catch (error) {
-        console.error("OSINT Generation Error:", error);
-        return NextResponse.json(
-            { error: "Failed to generate OSINT report. Please check API key and try again." },
-            { status: 500 }
-        );
+        // Let's try parsing it to see if it breaks
+        const parsed = JSON.parse(text);
+        console.log("SUCCESSFULLY PARSED JSON!");
+        console.log(Object.keys(parsed));
+    } catch (err) {
+        console.error("FAILED:", err);
     }
 }
+
+test();
