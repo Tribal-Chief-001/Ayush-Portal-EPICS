@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
+import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, PieChart, Pie, Cell } from "recharts";
+import { Activity, ShieldAlert, Target, TrendingUp, Users, Cpu, FileWarning, Globe, PieChart as PieIcon, LineChart } from "lucide-react";
 
 interface Startup {
     id: string;
@@ -127,10 +129,13 @@ export default function InvestorsPage() {
 
         // Simulated terminal logs
         const logs = [
-            `[1.2s] Scraping regulatory databases for ${startup.name}...`,
-            `[2.5s] Analyzing social sentiment (Twitter, LinkedIn, News)...`,
-            `[3.8s] Compiling market growth projections for ${startup.sector}...`,
-            `[4.5s] Finalizing intelligence report...`
+            `> INITIALIZING NEURAL SCRAPER [V0.4.2]...`,
+            `> TARGET LOCK INITIATED: ${startup.name.toUpperCase()}`,
+            `> EXTRACTING GLOBAL KINETICS FOR ${startup.sector.toUpperCase()} VECTOR...`,
+            `> [23.4%] INGESTING REGULATORY HEURISTICS...`,
+            `> [55.1%] EXECUTING COMPETITIVE THREAT ANALYSIS MATRIX...`,
+            `> [89.3%] COMPUTING PREDICTIVE SENTIMENT DELTAS...`,
+            `> SYNTHESIZING INTELLIGENCE PAYLOAD...`
         ];
 
         // Execute simulated terminal delay asynchronously while making the real API call
@@ -403,94 +408,179 @@ export default function InvestorsPage() {
                 </div>
             </div>
 
-            {/* OSINT AI Modal */}
+            {/* OSINT COMMAND CENTER */}
             {osintModalOpen && (
-                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-200">
-                        <div className="bg-slate-900 p-4 border-b border-slate-800 flex justify-between items-center">
-                            <h2 className="text-white font-bold flex items-center gap-2">
-                                <span className="material-icons text-blue-400">memory</span> 
-                                OSINT Intelligence Report <span className="text-slate-500 font-normal">| {osintStartup?.name}</span>
-                            </h2>
-                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+                    <div className="bg-[#0a0a0a] rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-800 ring-1 ring-white/5 font-sans">
+                        <div className="bg-[#111] p-5 border-b border-slate-800 flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                <Cpu className="w-6 h-6 text-emerald-400 animate-pulse" />
+                                <h2 className="text-white font-bold tracking-widest uppercase text-sm flex items-center gap-2">
+                                    OSINT Intelligence Suite <span className="text-slate-600">|</span> <span className="text-emerald-400">{osintStartup?.name}</span>
+                                </h2>
+                            </div>
+                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-500 hover:text-white transition-colors">
                                 <span className="material-icons">close</span>
                             </button>
                         </div>
                         
-                        <div className="p-6 overflow-y-auto bg-slate-50 flex-1">
+                        <div className="p-0 overflow-y-auto flex-1 !scrollbar-thin !scrollbar-thumb-slate-800 !scrollbar-track-transparent">
                             {osintLoading ? (
-                                <div className="bg-black text-green-400 font-mono text-xs p-5 rounded-xl border border-slate-800 min-h-[300px] flex flex-col">
-                                    {osintLogs.map((log, i) => (
-                                        <div key={i} className="mb-2 tracking-tight opacity-90 animate-fade-in">{log}</div>
-                                    ))}
-                                    <div className="mt-2 flex items-center gap-2 text-blue-400">
-                                        <span className="w-2 h-4 bg-blue-400 animate-pulse"></span> Processing target vectors...
+                                <div className="p-8">
+                                    <div className="bg-black text-emerald-500 font-mono text-xs sm:text-sm p-6 rounded-xl border border-emerald-900/30 min-h-[400px] flex flex-col shadow-[0_0_30px_rgba(16,185,129,0.05)_inset]">
+                                        <div className="flex items-center gap-2 mb-6 border-b border-emerald-900/50 pb-4">
+                                            <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                                            <span className="tracking-widest uppercase opacity-70">Live Uplink Established</span>
+                                        </div>
+                                        {osintLogs.map((log, i) => (
+                                            <div key={i} className="mb-3 tracking-tight opacity-90 animate-fade-in">{log}</div>
+                                        ))}
+                                        <div className="mt-auto flex items-center gap-2 text-emerald-400/70 pt-4 border-t border-emerald-900/30">
+                                            <span className="w-2 h-4 bg-emerald-400 animate-pulse"></span>
+                                            <span>Awaiting payload resolution...</span>
+                                        </div>
                                     </div>
                                 </div>
                             ) : osintResult ? (
-                                <div className="space-y-6 animate-fade-in">
-                                    <p className="text-sm text-slate-600 leading-relaxed bg-blue-50/50 p-4 rounded-xl border border-blue-100">{osintResult.summary}</p>
+                                <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 bg-[#0a0a0a] text-slate-300 animate-fade-in">
+                                    {/* Exec Summary */}
+                                    <div className="bg-[#111] border border-slate-800/80 rounded-xl p-5 sm:p-8 relative overflow-hidden shadow-xl shadow-black">
+                                        <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]"></div>
+                                        <h3 className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-4 flex items-center gap-2"><Globe className="w-4 h-4"/> Executive Summary</h3>
+                                        <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">{osintResult.executiveSummary}</p>
+                                    </div>
                                     
-                                    <div className="grid grid-cols-2 gap-4">
-                                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center">
-                                                <span className="material-icons text-xl">trending_up</span>
+                                    {/* Massive Metrics Grid */}
+                                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                        
+                                        {/* Growth Trend Area Chart */}
+                                        <div className="lg:col-span-2 bg-[#111] border border-slate-800 rounded-xl p-6 shadow-xl shadow-black">
+                                            <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
+                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><LineChart className="w-4 h-4 text-sky-400"/> Growth Kinetics</h3>
+                                                <span className="text-emerald-400 font-mono text-xl font-bold">+{osintResult.metrics?.projectedGrowth}% YoY</span>
                                             </div>
-                                            <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Projected Growth</p>
-                                                <p className="text-lg font-bold text-slate-900">{osintResult.projectedGrowth}</p>
+                                            <div className="h-56 w-full mt-4">
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                    <AreaChart data={osintResult.metrics?.growthTrend || []}>
+                                                        <defs>
+                                                            <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                                                                <stop offset="5%" stopColor="#38bdf8" stopOpacity={0.3}/>
+                                                                <stop offset="95%" stopColor="#38bdf8" stopOpacity={0}/>
+                                                            </linearGradient>
+                                                        </defs>
+                                                        <XAxis dataKey="month" stroke="#334155" fontSize={10} tickLine={false} axisLine={false}/>
+                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} itemStyle={{color: '#38bdf8'}} />
+                                                        <Area type="monotone" dataKey="value" stroke="#38bdf8" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
+                                                    </AreaChart>
+                                                </ResponsiveContainer>
                                             </div>
                                         </div>
-                                        <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center">
-                                                <span className="material-icons text-xl">forum</span>
+
+                                        {/* Sentiment Pie */}
+                                        <div className="bg-[#111] border border-slate-800 rounded-xl p-6 flex flex-col shadow-xl shadow-black">
+                                            <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
+                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><PieIcon className="w-4 h-4 text-purple-400"/> Web Sentiment</h3>
+                                                <span className="text-white font-mono text-xl font-bold">{osintResult.metrics?.sentiment?.score}/100</span>
                                             </div>
-                                            <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Web Sentiment</p>
-                                                <p className="text-lg font-bold text-slate-900">{osintResult.marketSentiment}</p>
+                                            <div className="flex-1 min-h-[200px] relative w-full flex items-center justify-center -mt-2">
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                    <PieChart>
+                                                        <Pie
+                                                            data={[
+                                                                { name: "Positive", value: osintResult.metrics?.sentiment?.positive || 0, color: "#10b981" },
+                                                                { name: "Neutral", value: osintResult.metrics?.sentiment?.neutral || 0, color: "#64748b" },
+                                                                { name: "Negative", value: osintResult.metrics?.sentiment?.negative || 0, color: "#ef4444" }
+                                                            ]}
+                                                            cx="50%" cy="50%" innerRadius={55} outerRadius={80} paddingAngle={3} dataKey="value" stroke="none"
+                                                        >
+                                                            {
+                                                                [
+                                                                    { color: "#10b981" },
+                                                                    { color: "#64748b" },
+                                                                    { color: "#ef4444" }
+                                                                ].map((entry, index) => (
+                                                                    <Cell key={`cell-${index}`} fill={entry.color} />
+                                                                ))
+                                                            }
+                                                        </Pie>
+                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} />
+                                                    </PieChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                            <div className="grid grid-cols-3 gap-2 text-center mt-2 border-t border-slate-800 pt-4">
+                                                <div><p className="text-[10px] text-slate-500 uppercase">Pos</p><p className="text-emerald-400 font-mono text-sm">{osintResult.metrics?.sentiment?.positive}%</p></div>
+                                                <div className="border-l border-r border-slate-800"><p className="text-[10px] text-slate-500 uppercase">Neu</p><p className="text-slate-400 font-mono text-sm">{osintResult.metrics?.sentiment?.neutral}%</p></div>
+                                                <div><p className="text-[10px] text-slate-500 uppercase">Neg</p><p className="text-rose-400 font-mono text-sm">{osintResult.metrics?.sentiment?.negative}%</p></div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-                                        <div className="p-4 border-b border-slate-100 bg-slate-50 flex justify-between items-center">
-                                            <h3 className="font-bold text-sm text-slate-900 flex items-center gap-2">
-                                                <span className="material-icons text-slate-400 text-sm">security</span> Risk Analysis
-                                            </h3>
-                                            <span className={`px-2.5 py-1 text-xs font-bold rounded-full ${osintResult.riskScore === 'Low' ? 'bg-green-100 text-green-700' : osintResult.riskScore === 'High' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'}`}>
-                                                {osintResult.riskScore} Risk
-                                            </span>
-                                        </div>
-                                        <div className="p-4 space-y-4">
-                                            <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Founder OSINT Check</p>
-                                                <p className="text-sm text-slate-700">{osintResult.founderBackground}</p>
-                                            </div>
-                                            <div>
-                                                <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Regulatory Intelligence</p>
-                                                <p className="text-sm text-slate-700">{osintResult.regulatory}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <h3 className="font-bold text-sm text-slate-900 mb-3 flex items-center gap-2">
-                                            <span className="material-icons text-slate-400 text-sm">group_work</span> Top Competitors Found
-                                        </h3>
-                                        <div className="flex flex-wrap gap-2">
-                                            {osintResult.competitors?.map((comp: string, i: number) => (
-                                                <span key={i} className="px-3 py-1.5 bg-white border border-slate-200 text-slate-700 text-sm rounded-lg shadow-sm">
-                                                    {comp}
+                                    {/* Risk & Competitors Grid */}
+                                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                        
+                                        {/* Radar Risk Matrix */}
+                                        <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-xl shadow-black flex flex-col">
+                                            <div className="flex justify-between items-center mb-2 border-b border-slate-800 pb-4">
+                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-rose-400"/> Risk Matrix</h3>
+                                                <span className={`px-3 py-1 text-xs font-bold rounded shadow-lg ${['Critical', 'High'].includes(osintResult.riskAnalysis?.overall) ? 'border border-rose-500/30 text-rose-400 bg-rose-500/10 shadow-rose-900/20' : osintResult.riskAnalysis?.overall === 'Moderate' ? 'border border-amber-500/30 text-amber-400 bg-amber-500/10 shadow-amber-900/20' : 'border border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-emerald-900/20'}`}>
+                                                    {osintResult.riskAnalysis?.overall} Threat
                                                 </span>
-                                            ))}
+                                            </div>
+                                            <div className="h-64 w-full mt-4 -ml-4 flex-1">
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                    <RadarChart cx="50%" cy="50%" outerRadius="75%" data={osintResult.riskAnalysis?.radar || []}>
+                                                        <PolarGrid stroke="#334155" strokeDasharray="3 3"/>
+                                                        <PolarAngleAxis dataKey="category" tick={{fill: '#94a3b8', fontSize: 11, fontWeight: 500}} />
+                                                        <Radar name="Severity" dataKey="score" stroke="#f43f5e" strokeWidth={2} fill="#f43f5e" fillOpacity={0.2} />
+                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} />
+                                                    </RadarChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                            <div className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-5 mt-4 bg-rose-950/10 p-4 rounded-lg">
+                                                <span className="text-rose-400 font-bold flex items-center gap-1 mb-2"><FileWarning className="w-3 h-3"/> REGULATORY FLAG:</span> 
+                                                <p className="font-light italic">{osintResult.riskAnalysis?.regulatoryNotes}</p>
+                                            </div>
                                         </div>
+
+                                        {/* Competitors & Founder Info */}
+                                        <div className="space-y-6">
+                                            <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-xl shadow-black relative overflow-hidden">
+                                                <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl"></div>
+                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest mb-5 flex items-center gap-2 border-b border-slate-800 pb-4"><Target className="w-4 h-4 text-amber-400"/> Competitor Mapping</h3>
+                                                <div className="space-y-3">
+                                                    {osintResult.competitors?.map((comp: any, i: number) => (
+                                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-[#141414] border border-slate-800/80 hover:border-slate-700 transition-colors">
+                                                            <span className="text-sm font-medium text-slate-200 mb-2 sm:mb-0">{comp.name}</span>
+                                                            <div className="flex items-center gap-4">
+                                                                <span className="text-xs text-slate-500 font-mono tracking-wider">{comp.marketShare}% Share</span>
+                                                                <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded tracking-wider ${comp.threatLevel === 'High' ? 'text-rose-400 bg-rose-400/10 border border-rose-400/20' : comp.threatLevel === 'Medium' ? 'text-amber-400 bg-amber-400/10 border border-amber-400/20' : 'text-emerald-400 bg-emerald-400/10 border border-emerald-400/20'}`}>
+                                                                    {comp.threatLevel}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+
+                                            <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-xl shadow-black relative overflow-hidden">
+                                                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
+                                                <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
+                                                    <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><Users className="w-4 h-4 text-blue-400"/> Founder Intelligence</h3>
+                                                    <span className="text-blue-400 font-mono text-lg font-bold shadow-lg shadow-blue-900/20">{osintResult.founderIntelligence?.credibilityScore}/100 </span>
+                                                </div>
+                                                <p className="text-sm text-slate-300 leading-relaxed font-light">{osintResult.founderIntelligence?.background}</p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             ) : (
-                                <div className="text-center py-10">
-                                    <span className="material-icons text-red-400 text-4xl mb-2">error_outline</span>
-                                    <p className="text-slate-600 font-medium tracking-tight">OSINT connection failed.</p>
-                                    <p className="text-sm text-slate-400 mt-1">Check logs for details.</p>
+                                <div className="text-center py-20 flex flex-col items-center justify-center min-h-[400px]">
+                                    <div className="w-16 h-16 rounded-full bg-rose-500/10 flex items-center justify-center mb-4 ring-1 ring-rose-500/30 shadow-[0_0_30px_rgba(244,63,94,0.15)]">
+                                        <FileWarning className="w-8 h-8 text-rose-500 animate-pulse" />
+                                    </div>
+                                    <p className="text-rose-400 font-mono text-sm uppercase tracking-widest mb-2 font-bold">OSINT Telemetry Failed</p>
+                                    <p className="text-xs text-slate-500 max-w-sm">Unable to resolve connection with intelligence database. Verify uplink protocols and API authorization.</p>
                                 </div>
                             )}
                         </div>
