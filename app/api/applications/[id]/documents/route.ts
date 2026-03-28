@@ -52,7 +52,11 @@ export async function POST(
         const fileName = `${Date.now()}-${file.name.replace(/\s+/g, "_")}`;
         const filePath = join(uploadDir, fileName);
 
-        await writeFile(filePath, buffer);
+        try {
+            await writeFile(filePath, buffer);
+        } catch (err: any) {
+            console.warn("Vercel Read-Only FS warning: Skipping physical file write, recording in DB only.", err.message);
+        }
 
         const document = await prisma.document.create({
             data: {
