@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/AuthContext";
+import { signIn } from "next-auth/react";
 import { useToast } from "@/context/ToastContext";
 
 type Role = "startup" | "investor" | "admin";
@@ -22,7 +22,6 @@ const demoAccounts: Record<Role, { email: string; password: string }> = {
 
 export default function LoginPage() {
     const router = useRouter();
-    const { login } = useAuth();
     const { showToast } = useToast();
     const [selectedRole, setSelectedRole] = useState<Role>("startup");
     const [email, setEmail] = useState("");
@@ -38,31 +37,33 @@ export default function LoginPage() {
         setError("");
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setError("");
 
         if (!email.trim()) { setError("Email is required"); return; }
         if (!password) { setError("Password is required"); return; }
-        if (password.length < 6) { setError("Password must be at least 6 characters"); return; }
 
         setLoading(true);
 
-        // Simulate network delay
-        setTimeout(() => {
-            const name = selectedRole === "startup" ? "Vikram Patel" : selectedRole === "investor" ? "Global Ventures" : "AYUSH Admin";
+        const result = await signIn("credentials", {
+            email,
+            password,
+            redirect: false,
+        });
 
-            // Update global auth state
-            login({ email, role: selectedRole, name });
+        if (result?.error) {
+            setError(result.error);
+            setLoading(false);
+            return;
+        }
 
-            // Show success toast
-            showToast(`Welcome back, ${name}!`, "success");
+        showToast(`Welcome back!`, "success");
 
-            // Route based on role
-            if (selectedRole === "admin") router.push("/admin");
-            else if (selectedRole === "investor") router.push("/investors");
-            else router.push("/dashboard");
-        }, 1200);
+        // Route based on role
+        if (selectedRole === "admin") router.push("/admin");
+        else if (selectedRole === "investor") router.push("/investors");
+        else router.push("/dashboard");
     };
 
     return (

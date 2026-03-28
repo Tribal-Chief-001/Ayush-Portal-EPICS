@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useSession, signOut } from "next-auth/react";
 
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
-    const { user, logout } = useAuth();
+    const { data: session } = useSession();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user = session?.user as any;
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     // Close dropdown when clicking outside
@@ -22,10 +24,10 @@ export default function Navbar() {
     }, []);
 
     const initials = user?.name
-        ? user.name.split(" ").map((w) => w[0]).join("").toUpperCase().slice(0, 2)
+        ? user.name.split(" ").map((w: string) => w[0]).join("").toUpperCase().slice(0, 2)
         : "";
 
-    const dashboardLink = user?.role === "admin" ? "/admin" : user?.role === "investor" ? "/investors" : "/dashboard";
+    const dashboardLink = user?.role === "ADMIN" ? "/admin" : user?.role === "INVESTOR" ? "/investors" : "/dashboard";
 
     return (
         <nav className="sticky top-0 z-50 w-full bg-surface-light/90 backdrop-blur-md border-b border-primary/20">
@@ -92,7 +94,7 @@ export default function Navbar() {
                                         </Link>
                                         <div className="border-t border-slate-100 mt-1 pt-1">
                                             <button
-                                                onClick={() => { setProfileOpen(false); logout(); }}
+                                                onClick={() => { setProfileOpen(false); signOut({ callbackUrl: "/login" }); }}
                                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
                                             >
                                                 <span className="material-icons text-lg">logout</span>
@@ -104,15 +106,15 @@ export default function Navbar() {
                             </div>
                         ) : (
                             <>
-                                <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-primary-dark px-3 py-2">Login</Link>
+                                <div className="flex items-center">
+                                    <Link href="/login" className="text-sm font-medium text-slate-600 hover:text-primary-dark px-3 py-2">Login</Link>
+                                </div>
                                 <Link href="/register" className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-slate-900 bg-primary hover:bg-primary-dark hover:text-white transition-all shadow-sm shadow-primary/30">
                                     Register Startup
                                 </Link>
                             </>
                         )}
                     </div>
-
-                    {/* Mobile menu button */}
                     <div className="md:hidden flex items-center">
                         <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-slate-500 hover:text-slate-700 focus:outline-none">
                             <span className="material-icons">{mobileMenuOpen ? "close" : "menu"}</span>
@@ -141,7 +143,7 @@ export default function Navbar() {
                                 </div>
                             </div>
                             <Link href={dashboardLink} onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-600 py-2">Dashboard</Link>
-                            <button onClick={() => { setMobileMenuOpen(false); logout(); }} className="block w-full text-left text-sm font-medium text-red-600 py-2">
+                            <button onClick={() => { setMobileMenuOpen(false); signOut({ callbackUrl: "/login" }); }} className="block w-full text-left text-sm font-medium text-red-600 py-2">
                                 Sign Out
                             </button>
                         </>

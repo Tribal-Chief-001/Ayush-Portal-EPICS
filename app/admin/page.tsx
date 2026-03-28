@@ -1,87 +1,93 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { useToast } from "@/components/Toast";
+import { useState, useMemo, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/context/ToastContext";
 
 interface Application {
     name: string;
     id: string;
+    dbId: string;
     initial: string;
     color: string;
     sector: string;
     sectorColor: string;
     date: string;
-    status: "Pending Review" | "Approved" | "Changes Requested" | "Rejected";
+    status: string;
+    dbStatus: string;
     statusColor: string;
     details: { founder: string; email: string; state: string; desc: string };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    documents: any[];
 }
 
-const initialApplications: Application[] = [
-    {
-        name: "VedaLife Organics", id: "#AYUSH-2024-001", initial: "V", color: "bg-green-100 text-green-700",
-        sector: "Ayurveda", sectorColor: "bg-green-50 text-green-700", date: "Oct 24, 2024",
-        status: "Pending Review", statusColor: "bg-yellow-100 text-yellow-700",
-        details: { founder: "Vikram Patel", email: "vikram@vedalife.com", state: "Karnataka", desc: "AI-driven supply chain for medicinal herbs." },
-    },
-    {
-        name: "YogiTech Solutions", id: "#AYUSH-2024-002", initial: "Y", color: "bg-blue-100 text-blue-700",
-        sector: "Yoga", sectorColor: "bg-teal-50 text-teal-700", date: "Oct 22, 2024",
-        status: "Pending Review", statusColor: "bg-yellow-100 text-yellow-700",
-        details: { founder: "Priya Sharma", email: "priya@yogitech.in", state: "Uttarakhand", desc: "VR yoga platform with real-time posture correction." },
-    },
-    {
-        name: "UnaniCure Labs", id: "#AYUSH-2024-003", initial: "U", color: "bg-purple-100 text-purple-700",
-        sector: "Unani", sectorColor: "bg-purple-50 text-purple-700", date: "Oct 20, 2024",
-        status: "Approved", statusColor: "bg-green-100 text-green-700",
-        details: { founder: "Faiz Khan", email: "faiz@unicure.in", state: "Telangana", desc: "Nano-technology based Unani formulations." },
-    },
-    {
-        name: "MindSiddha", id: "#AYUSH-2024-004", initial: "M", color: "bg-orange-100 text-orange-700",
-        sector: "Siddha", sectorColor: "bg-orange-50 text-orange-700", date: "Oct 18, 2024",
-        status: "Changes Requested", statusColor: "bg-amber-100 text-amber-700",
-        details: { founder: "Arun Kumar", email: "arun@mindsiddha.com", state: "Tamil Nadu", desc: "Wearable Siddha Varmam therapy devices." },
-    },
-    {
-        name: "HomeoGlow", id: "#AYUSH-2024-005", initial: "H", color: "bg-pink-100 text-pink-700",
-        sector: "Homeopathy", sectorColor: "bg-pink-50 text-pink-700", date: "Oct 15, 2024",
-        status: "Pending Review", statusColor: "bg-yellow-100 text-yellow-700",
-        details: { founder: "Neha Gupta", email: "neha@homeoglow.com", state: "Maharashtra", desc: "AI-personalized homeopathic skincare." },
-    },
-    {
-        name: "BioAyur Tech", id: "#AYUSH-2024-006", initial: "B", color: "bg-teal-100 text-teal-700",
-        sector: "Ayurveda", sectorColor: "bg-green-50 text-green-700", date: "Oct 12, 2024",
-        status: "Rejected", statusColor: "bg-red-100 text-red-700",
-        details: { founder: "Rajesh Mehta", email: "rajesh@bioayur.in", state: "Maharashtra", desc: "Ayurvedic herb compound extraction for nutraceuticals." },
-    },
-];
-
-const statusColorMap: Record<string, string> = {
-    "Pending Review": "bg-yellow-100 text-yellow-700",
-    "Approved": "bg-green-100 text-green-700",
-    "Changes Requested": "bg-amber-100 text-amber-700",
-    "Rejected": "bg-red-100 text-red-700",
+const statusDisplay: Record<string, string> = {
+    PENDING: "Pending Review",
+    UNDER_REVIEW: "Under Review",
+    APPROVED: "Approved",
+    CHANGES_REQUESTED: "Changes Requested",
+    REJECTED: "Rejected",
 };
 
 type StatusFilter = "All" | "Pending Review" | "Approved" | "Changes Requested" | "Rejected";
 
 export default function AdminPage() {
-    const [applications, setApplications] = useState<Application[]>(initialApplications);
+    const { status: sessionStatus } = useSession();
+    const router = useRouter();
+
+    const [applications, setApplications] = useState<Application[]>([]);
+    const [counts, setCounts] = useState({ all: 0, pending: 0, approved: 0, changes: 0, rejected: 0 });
     const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
     const [searchQuery, setSearchQuery] = useState("");
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [actionLog, setActionLog] = useState<string[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const { showToast } = useToast();
 
-    const updateStatus = (id: string, newStatus: Application["status"]) => {
-        setApplications((prev) =>
-            prev.map((app) =>
-                app.id === id ? { ...app, status: newStatus, statusColor: statusColorMap[newStatus] } : app
-            )
-        );
-        setActionLog((prev) => [`${id} → ${newStatus} at ${new Date().toLocaleTimeString()}`, ...prev.slice(0, 9)]);
-        const toastType = newStatus === "Approved" ? "success" : newStatus === "Rejected" ? "error" : "info";
-        showToast(`Application ${id} → ${newStatus}`, toastType);
+    const fetchApplications = () => {
+        fetch("/api/applications")
+            .then(res => res.json())
+            .then(data => {
+                if (data.applications) {
+                    setApplications(data.applications);
+                    setCounts(data.counts);
+                }
+                setIsLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setIsLoading(false);
+            });
+    };
+
+    useEffect(() => {
+        if (sessionStatus === "unauthenticated") {
+            router.push("/login");
+            return;
+        }
+        if (sessionStatus === "authenticated") {
+            fetchApplications();
+        }
+    }, [sessionStatus, router]);
+
+    const updateStatus = async (dbId: string, newDbStatus: string, appId: string) => {
+        try {
+            const res = await fetch(`/api/applications/${appId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ status: newDbStatus, comment: `System update to ${statusDisplay[newDbStatus]}` })
+            });
+
+            if (!res.ok) throw new Error("Failed to update status");
+
+            showToast(`Application ${appId} → ${statusDisplay[newDbStatus]}`, "success");
+            setActionLog((prev) => [`${appId} → ${statusDisplay[newDbStatus]} at ${new Date().toLocaleTimeString()}`, ...prev.slice(0, 9)]);
+            fetchApplications();
+        } catch (error) {
+            showToast("Failed to update status", "error");
+        }
     };
 
     const filtered = useMemo(() => {
@@ -94,16 +100,16 @@ export default function AdminPage() {
         return result;
     }, [applications, statusFilter, searchQuery]);
 
-    const counts = useMemo(() => {
-        const c = { all: applications.length, pending: 0, approved: 0, changes: 0, rejected: 0 };
-        applications.forEach((a) => {
-            if (a.status === "Pending Review") c.pending++;
-            if (a.status === "Approved") c.approved++;
-            if (a.status === "Changes Requested") c.changes++;
-            if (a.status === "Rejected") c.rejected++;
-        });
-        return c;
-    }, [applications]);
+    if (isLoading || sessionStatus === "loading") {
+        return (
+            <div className="min-h-screen bg-background-light flex items-center justify-center">
+                <svg className="animate-spin h-8 w-8 text-primary" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-background-light font-display">
@@ -216,31 +222,31 @@ export default function AdminPage() {
                                                 </td>
                                                 <td className="px-5 py-4">
                                                     <div className="flex items-center justify-center gap-1">
-                                                        {app.status === "Pending Review" && (
+                                                        {app.dbStatus === "PENDING" && (
                                                             <>
-                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.id, "Approved"); }} className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors" title="Approve">
+                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "APPROVED", app.id); }} className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors" title="Approve">
                                                                     <span className="material-icons text-sm">check</span>
                                                                 </button>
-                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.id, "Changes Requested"); }} className="p-1.5 bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition-colors" title="Request Changes">
+                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "CHANGES_REQUESTED", app.id); }} className="p-1.5 bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition-colors" title="Request Changes">
                                                                     <span className="material-icons text-sm">edit</span>
                                                                 </button>
-                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.id, "Rejected"); }} className="p-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors" title="Reject">
+                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "REJECTED", app.id); }} className="p-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors" title="Reject">
                                                                     <span className="material-icons text-sm">close</span>
                                                                 </button>
                                                             </>
                                                         )}
-                                                        {app.status === "Approved" && (
+                                                        {app.dbStatus === "APPROVED" && (
                                                             <span className="text-xs text-green-600 font-medium flex items-center gap-1">
                                                                 <span className="material-icons text-xs">check_circle</span> Done
                                                             </span>
                                                         )}
-                                                        {app.status === "Rejected" && (
-                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.id, "Pending Review"); }} className="px-3 py-1 text-xs text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 font-medium">
+                                                        {app.dbStatus === "REJECTED" && (
+                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "PENDING", app.id); }} className="px-3 py-1 text-xs text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 font-medium">
                                                                 Reopen
                                                             </button>
                                                         )}
-                                                        {app.status === "Changes Requested" && (
-                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.id, "Pending Review"); }} className="px-3 py-1 text-xs text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 font-medium">
+                                                        {app.dbStatus === "CHANGES_REQUESTED" && (
+                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "PENDING", app.id); }} className="px-3 py-1 text-xs text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 font-medium">
                                                                 Re-review
                                                             </button>
                                                         )}
@@ -256,16 +262,24 @@ export default function AdminPage() {
                                                         <div className="grid sm:grid-cols-3 gap-4 text-sm">
                                                             <div>
                                                                 <p className="text-xs text-slate-400 uppercase font-bold mb-1">Founder</p>
-                                                                <p className="text-slate-700">{app.details.founder}</p>
-                                                                <p className="text-xs text-slate-400">{app.details.email}</p>
+                                                                <p className="text-slate-700">{app.details?.founder}</p>
+                                                                <p className="text-xs text-slate-400">{app.details?.email}</p>
                                                             </div>
                                                             <div>
                                                                 <p className="text-xs text-slate-400 uppercase font-bold mb-1">Location</p>
-                                                                <p className="text-slate-700">{app.details.state}</p>
+                                                                <p className="text-slate-700">{app.details?.state}</p>
                                                             </div>
-                                                            <div>
-                                                                <p className="text-xs text-slate-400 uppercase font-bold mb-1">Description</p>
-                                                                <p className="text-slate-700">{app.details.desc}</p>
+                                                            <div className="flex flex-col gap-2">
+                                                                <p className="text-xs text-slate-400 uppercase font-bold mb-1">Documents Uploaded</p>
+                                                                {app.documents?.length > 0 ? (
+                                                                    app.documents.map((doc, idx) => (
+                                                                        <a key={idx} href={doc.filePath} download className="text-primary hover:underline flex items-center gap-1 text-xs">
+                                                                            <span className="material-icons text-[14px]">file_download</span> {doc.fileName}
+                                                                        </a>
+                                                                    ))
+                                                                ) : (
+                                                                    <p className="text-xs text-slate-400">No documents</p>
+                                                                )}
                                                             </div>
                                                         </div>
                                                     </td>

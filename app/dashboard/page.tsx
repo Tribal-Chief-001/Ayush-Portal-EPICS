@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const navLinks = [
     { label: "Overview", icon: "dashboard", active: true },
@@ -10,43 +12,62 @@ const navLinks = [
     { label: "Documents", icon: "folder", active: false },
 ];
 
-const timelineSteps = [
-    { label: "Registration Submitted", date: "Oct 15, 2024", status: "done" },
-    { label: "Documents Verified", date: "Oct 18, 2024", status: "done" },
-    { label: "Expert Review", date: "In Progress", status: "current" },
-    { label: "Final Approval", date: "Pending", status: "pending" },
-];
-
-interface Notification {
-    id: number;
-    icon: string;
-    iconColor: string;
-    iconBg: string;
-    title: string;
-    desc: string;
-    time: string;
-}
-
-const initialNotifications: Notification[] = [
-    { id: 1, icon: "check_circle", iconColor: "text-green-600", iconBg: "bg-green-100", title: "Document Verified", desc: "GST Certificate has been verified.", time: "2 hours ago" },
-    { id: 2, icon: "info", iconColor: "text-blue-600", iconBg: "bg-blue-100", title: "Application Update", desc: "Your application moved to Expert Review stage.", time: "1 day ago" },
-    { id: 3, icon: "warning", iconColor: "text-amber-600", iconBg: "bg-amber-100", title: "Action Required", desc: "Please upload updated product certification.", time: "3 days ago" },
-];
-
 export default function DashboardPage() {
-    const [notifications, setNotifications] = useState(initialNotifications);
-    const [progress, setProgress] = useState(0);
-    const [activeNav, setActiveNav] = useState("Overview");
+    const { status } = useSession();
+    const router = useRouter();
 
-    // Animate progress bar on mount
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const [data, setData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [activeNav, setActiveNav] = useState("Overview");
+    const [animProgress, setAnimProgress] = useState(0);
+
     useEffect(() => {
-        const timer = setTimeout(() => setProgress(65), 300);
-        return () => clearTimeout(timer);
-    }, []);
+        if (status === "unauthenticated") {
+            router.push("/login");
+            return;
+        }
+
+        if (status === "authenticated") {
+            fetch("/api/dashboard")
+                .then((res) => res.json())
+                .then((json) => {
+                    setData(json);
+                    setIsLoading(false);
+                    setTimeout(() => setAnimProgress(json.progress || 0), 300);
+                })
+                .catch((err) => {
+                    console.error(err);
+                    setIsLoading(false);
+                });
+        }
+    }, [status, router]);
 
     const dismissNotification = (id: number) => {
-        setNotifications((prev) => prev.filter((n) => n.id !== id));
+        if (!data) return;
+        setData({
+            ...data,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            notifications: data.notifications.filter((n: any) => n.id !== id)
+        });
     };
+
+    if (isLoading || status === "loading") {
+        return (
+            <div className="min-h-screen bg-background-light flex items-center justify-center">
+                <svg className="animate-spin h-8 w-8 text-primary" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+            </div>
+        );
+    }
+
+    if (!data || !data.user) {
+        return <div className="min-h-screen bg-background-light flex items-center justify-center">Error loading dashboard</div>;
+    }
+
+    const { user, startup, application, timeline, notifications, stats } = data;
 
     return (
         <div className="min-h-screen bg-background-light font-display">
@@ -63,16 +84,16 @@ export default function DashboardPage() {
                         </Link>
                         <button className="p-2 hover:bg-slate-50 rounded-lg relative">
                             <span className="material-icons text-slate-400">notifications</span>
-                            {notifications.length > 0 && (
+                            {notifications?.length > 0 && (
                                 <span className="absolute -top-0.5 -right-0.5 w-4 h-4 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{notifications.length}</span>
                             )}
                         </button>
                         <div className="flex items-center gap-2">
                             <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                                <span className="text-sm font-bold text-primary-dark">VP</span>
+                                <span className="text-sm font-bold text-primary-dark">{user.name.charAt(0).toUpperCase()}</span>
                             </div>
                             <div className="hidden sm:block">
-                                <p className="text-sm font-medium text-slate-900">Vikram Patel</p>
+                                <p className="text-sm font-medium text-slate-900">{user.name}</p>
                                 <p className="text-[10px] text-slate-400">Founder</p>
                             </div>
                         </div>
@@ -116,26 +137,28 @@ export default function DashboardPage() {
                     <div className="flex-1">
                         {/* Welcome Banner */}
                         <div className="bg-gradient-to-r from-primary-dark to-green-700 rounded-2xl p-6 sm:p-8 mb-8 text-white">
-                            <h1 className="text-2xl font-bold mb-2">Welcome back, Vikram! 👋</h1>
-                            <p className="text-green-200 text-sm mb-4">Your application is currently under expert review. Here&apos;s your progress.</p>
+                            <h1 className="text-2xl font-bold mb-2">Welcome back, {user.name.split(" ")[0]}! 👋</h1>
+                            <p className="text-green-200 text-sm mb-4">
+                                {application ? "Your application is currently tracking through our system. Here's your progress." : "You haven't submitted your application yet. Please register your startup to continue."}
+                            </p>
                             <div className="flex items-center gap-4">
                                 <div className="flex-1 bg-white/20 rounded-full h-3 overflow-hidden">
                                     <div
                                         className="h-full bg-primary rounded-full transition-all duration-1000 ease-out"
-                                        style={{ width: `${progress}%` }}
+                                        style={{ width: `${animProgress}%` }}
                                     ></div>
                                 </div>
-                                <span className="text-sm font-bold">{progress}%</span>
+                                <span className="text-sm font-bold">{animProgress}%</span>
                             </div>
                         </div>
 
                         {/* Stats Row */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                             {[
-                                { icon: "description", label: "Application", value: "Under Review", color: "text-amber-600", bg: "bg-amber-50" },
-                                { icon: "folder", label: "Documents", value: "3/4 Uploaded", color: "text-blue-600", bg: "bg-blue-50" },
-                                { icon: "schedule", label: "Est. Completion", value: "Oct 28", color: "text-green-600", bg: "bg-green-50" },
-                                { icon: "verified", label: "Certification", value: "Pending", color: "text-purple-600", bg: "bg-purple-50" },
+                                { icon: "description", label: "Application", value: stats?.application || "N/A", color: "text-amber-600", bg: "bg-amber-50" },
+                                { icon: "folder", label: "Documents", value: stats?.documents || "0", color: "text-blue-600", bg: "bg-blue-50" },
+                                { icon: "schedule", label: "Est. Completion", value: stats?.estCompletion || "N/A", color: "text-green-600", bg: "bg-green-50" },
+                                { icon: "verified", label: "Certification", value: stats?.certification || "N/A", color: "text-purple-600", bg: "bg-purple-50" },
                             ].map((stat) => (
                                 <div key={stat.label} className="bg-white rounded-xl border border-slate-100 p-4 hover:shadow-sm transition-shadow">
                                     <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center mb-3`}>
@@ -153,35 +176,40 @@ export default function DashboardPage() {
                                 <h2 className="font-bold text-slate-900 mb-6 flex items-center gap-2">
                                     <span className="material-icons text-primary-dark">timeline</span> Application Timeline
                                 </h2>
-                                <div className="space-y-6">
-                                    {timelineSteps.map((step, i) => (
-                                        <div key={step.label} className="flex gap-4">
-                                            <div className="flex flex-col items-center">
-                                                <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${step.status === "done"
-                                                    ? "bg-primary border-primary text-white"
-                                                    : step.status === "current"
-                                                        ? "border-primary text-primary-dark bg-primary/10 animate-pulse"
-                                                        : "border-slate-200 text-slate-300 bg-white"
-                                                    }`}>
-                                                    {step.status === "done" ? (
-                                                        <span className="material-icons text-sm">check</span>
-                                                    ) : step.status === "current" ? (
-                                                        <span className="material-icons text-sm">hourglass_top</span>
-                                                    ) : (
-                                                        <span className="text-xs font-bold">{i + 1}</span>
+                                {!application ? (
+                                    <p className="text-sm text-slate-500">No application timeline to display.</p>
+                                ) : (
+                                    <div className="space-y-6">
+                                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                                        {timeline?.map((step: any, i: number) => (
+                                            <div key={step.label} className="flex gap-4">
+                                                <div className="flex flex-col items-center">
+                                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center border-2 ${step.status === "done"
+                                                        ? "bg-primary border-primary text-white"
+                                                        : step.status === "current"
+                                                            ? "border-primary text-primary-dark bg-primary/10 animate-pulse"
+                                                            : "border-slate-200 text-slate-300 bg-white"
+                                                        }`}>
+                                                        {step.status === "done" ? (
+                                                            <span className="material-icons text-sm">check</span>
+                                                        ) : step.status === "current" ? (
+                                                            <span className="material-icons text-sm">hourglass_top</span>
+                                                        ) : (
+                                                            <span className="text-xs font-bold">{i + 1}</span>
+                                                        )}
+                                                    </div>
+                                                    {i < timeline.length - 1 && (
+                                                        <div className={`w-0.5 h-8 mt-1 ${step.status === "done" ? "bg-primary" : "bg-slate-200"}`}></div>
                                                     )}
                                                 </div>
-                                                {i < timelineSteps.length - 1 && (
-                                                    <div className={`w-0.5 h-8 mt-1 ${step.status === "done" ? "bg-primary" : "bg-slate-200"}`}></div>
-                                                )}
+                                                <div className="pt-1">
+                                                    <p className={`text-sm font-semibold ${step.status === "pending" ? "text-slate-400" : "text-slate-900"}`}>{step.label}</p>
+                                                    <p className={`text-xs ${step.status === "current" ? "text-primary-dark font-medium" : "text-slate-400"}`}>{step.date}</p>
+                                                </div>
                                             </div>
-                                            <div className="pt-1">
-                                                <p className={`text-sm font-semibold ${step.status === "pending" ? "text-slate-400" : "text-slate-900"}`}>{step.label}</p>
-                                                <p className={`text-xs ${step.status === "current" ? "text-primary-dark font-medium" : "text-slate-400"}`}>{step.date}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
 
                             {/* Notifications */}
@@ -190,18 +218,19 @@ export default function DashboardPage() {
                                     <h2 className="font-bold text-slate-900 flex items-center gap-2">
                                         <span className="material-icons text-primary-dark">notifications</span> Notifications
                                     </h2>
-                                    {notifications.length > 0 && (
-                                        <button onClick={() => setNotifications([])} className="text-xs text-slate-400 hover:text-slate-600">Clear all</button>
+                                    {notifications?.length > 0 && (
+                                        <button onClick={() => setData({ ...data, notifications: [] })} className="text-xs text-slate-400 hover:text-slate-600">Clear all</button>
                                     )}
                                 </div>
-                                {notifications.length === 0 ? (
+                                {notifications?.length === 0 ? (
                                     <div className="text-center py-8">
                                         <span className="material-icons text-slate-200 text-4xl">notifications_none</span>
                                         <p className="text-sm text-slate-400 mt-2">All caught up!</p>
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
-                                        {notifications.map((n) => (
+                                        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                                        {notifications?.map((n: any) => (
                                             <div key={n.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors group">
                                                 <div className={`w-8 h-8 rounded-full ${n.iconBg} flex items-center justify-center flex-shrink-0`}>
                                                     <span className={`material-icons text-sm ${n.iconColor}`}>{n.icon}</span>

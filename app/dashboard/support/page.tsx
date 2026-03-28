@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
+import { useSession } from "next-auth/react";
+
 
 interface Message {
     role: "user" | "assistant";
@@ -44,12 +46,24 @@ const schemes = [
 ];
 
 export default function SupportPage() {
+    const { data: session, status } = useSession();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const user = session?.user as any;
+    
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState<Message[]>([
         { role: "assistant", text: "Hello! 👋 I'm the AYUSH Assistant. I can help you with registration, certification, funding schemes, and more. What would you like to know?", time: "Just now" },
     ]);
     const [isTyping, setIsTyping] = useState(false);
     const chatEndRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        if (user && user.name) {
+            setMessages([
+                { role: "assistant", text: `Hello ${user.name}! 👋 I'm the AYUSH Assistant. I can see you are signed in as a ${user.role}. How can I assist you with your registration or platform navigation today?`, time: "Just now" }
+            ]);
+        }
+    }, [user]);
 
     useEffect(() => {
         chatEndRef.current?.scrollIntoView({ behavior: "smooth" });

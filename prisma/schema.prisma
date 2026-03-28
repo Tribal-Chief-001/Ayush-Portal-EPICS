@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  STARTUP
+  INVESTOR
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  APPROVED
+  CHANGES_REQUESTED
+  REJECTED
+}
+
+enum DocumentType {
+  GST
+  CLINICAL
+  CERTIFICATION
+  OTHER
+}
+
+enum ReviewActionType {
+  APPROVED
+  REJECTED
+  CHANGES_REQUESTED
+  REOPENED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(STARTUP)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  startupProfile  StartupProfile?
+  investorProfile InvestorProfile?
+  applications    Application[]
+  reviewActions   ReviewAction[]
+  bookmarks       Bookmark[]
+}
+
+model StartupProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  startupName       String
+  ayushSector       String
+  dippNumber        String?
+  incorporationDate String?
+  description       String
+  website           String?
+  teamSize          String?
+  state             String
+  city              String?
+  phone             String?
+  fundingAsk        String?
+  revenue           String?
+  stage             String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model InvestorProfile {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firmName          String
+  investmentRange   String?
+  sectorsOfInterest String?
+  bio               String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Application {
+  id            String            @id @default(cuid())
+  userId        String
+  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applicationId String            @unique
+  status        ApplicationStatus @default(PENDING)
+  submittedAt   DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+
+  documents     Document[]
+  reviewActions ReviewAction[]
+}
+
+model Document {
+  id            String       @id @default(cuid())
+  applicationId String
+  application   Application  @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  type          DocumentType
+  fileName      String
+  filePath      String
+  fileSize      Int
+  uploadedAt    DateTime     @default(now())
+}
+
+model ReviewAction {
+  id            String           @id @default(cuid())
+  applicationId String
+  application   Application      @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  adminId       String
+  admin         User             @relation(fields: [adminId], references: [id])
+  action        ReviewActionType
+  comment       String?
+  timestamp     DateTime         @default(now())
+}
+
+model Bookmark {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  targetId   String
+  targetType String
+  createdAt  DateTime @default(now())
+
+  @@unique([userId, targetId, targetType])
+}

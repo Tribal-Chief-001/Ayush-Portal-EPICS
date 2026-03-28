@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState, useRef, FormEvent } from "react";
-import { useToast } from "@/components/Toast";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
+import { useToast } from "@/context/ToastContext";
 
 const steps = ["BASIC INFO", "BUSINESS DETAILS", "DOCUMENTS", "REVIEW"];
 
@@ -42,6 +44,8 @@ export default function RegisterPage() {
     const [submitted, setSubmitted] = useState(false);
     const [agreeTerms, setAgreeTerms] = useState(false);
     const [dragOver, setDragOver] = useState<string | null>(null);
+    const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const gstRef = useRef<HTMLInputElement>(null);
     const clinicalRef = useRef<HTMLInputElement>(null);
@@ -92,11 +96,66 @@ export default function RegisterPage() {
 
     const back = () => setCurrentStep((s) => Math.max(0, s - 1));
 
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!agreeTerms) { setErrors({ terms: "You must agree to the terms" }); return; }
-        setSubmitted(true);
-        showToast("Registration submitted successfully!", "success");
+        
+        setLoading(true);
+        try {
+            const res = await fetch("/api/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    founderName: form.founderName,
+                    email: form.email,
+                    phone: form.phone,
+                    password: form.password,
+                    startupName: form.startupName,
+                    ayushSector: form.ayushSector,
+                    dippNumber: form.dippNumber,
+                    incorporationDate: form.incorporationDate,
+                    description: form.description,
+                    website: form.website,
+                    teamSize: form.teamSize,
+                    state: form.state,
+                    city: form.city,
+                })
+            });
+
+            const data = await res.json();
+            if (!res.ok) {
+                showToast(data.error || "Registration failed", "error");
+                setLoading(false);
+                return;
+            }
+
+            // Auto Sign In
+            await signIn("credentials", {
+                email: form.email,
+                password: form.password,
+                redirect: false,
+            });
+
+            // Upload files
+            const uploadFile = async (file: File | null, type: string) => {
+                if (!file) return;
+                const fd = new FormData();
+                fd.append("file", file);
+                fd.append("type", type);
+                await fetch(`/api/applications/${data.applicationId}/documents`, { method: "POST", body: fd });
+            };
+
+            await uploadFile(form.gstFile, "GST");
+            await uploadFile(form.clinicalFile, "CLINICAL");
+            await uploadFile(form.certFile, "CERTIFICATION");
+
+            setSubmitted(true);
+            showToast("Registration submitted successfully!", "success");
+        } catch (error) {
+            showToast("An unexpected error occurred", "error");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleDrop = (field: "gstFile" | "clinicalFile" | "certFile") => (e: React.DragEvent) => {
@@ -508,8 +567,18 @@ export default function RegisterPage() {
                                 {errors.terms && <p className="text-xs text-red-500 mt-2 ml-7">{errors.terms}</p>}
                             </div>
 
-                            <button type="submit" className="w-full py-3 bg-primary rounded-lg text-sm font-bold text-slate-900 hover:bg-primary-dark hover:text-white transition-all shadow-sm shadow-primary/30 flex items-center justify-center gap-2">
-                                <span className="material-icons text-lg">send</span> Submit Application
+                            <button type="submit" disabled={loading} className={`w-full py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${loading ? "bg-slate-200 text-slate-400 cursor-not-allowed" : "bg-primary text-slate-900 hover:bg-primary-dark hover:text-white shadow-sm shadow-primary/30"}`}>
+                                {loading ? (
+                                    <>
+                                        <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                                        </svg>
+                                        Submitting...
+                                    </>
+                                ) : (
+                                    <><span className="material-icons text-lg">send</span> Submit Application</>
+                                )}
                             </button>
                         </form>
                     )}
