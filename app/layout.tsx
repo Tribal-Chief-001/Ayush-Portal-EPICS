@@ -14,7 +14,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className="bg-[#0a0a0a] text-slate-200 font-display min-h-screen flex flex-col">
+            <body className="bg-slate-50 dark:bg-[#0a0a0a] text-slate-800 dark:text-slate-200 font-display min-h-screen flex flex-col">
                 <Providers>
                     <div className="page-enter">
                         {children}

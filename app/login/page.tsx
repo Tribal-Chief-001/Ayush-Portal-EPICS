@@ -71,12 +71,12 @@ export default function LoginPage() {
             {/* Left Panel — Branding */}
             <div className="hidden lg:flex lg:w-5/12 bg-primary-dark flex-col justify-between p-12 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-20 left-10 w-40 h-40 bg-[#111111] rounded-full blur-3xl"></div>
+                    <div className="absolute top-20 left-10 w-40 h-40 bg-white dark:bg-[#111111] rounded-full blur-3xl"></div>
                     <div className="absolute bottom-20 right-10 w-60 h-60 bg-primary rounded-full blur-3xl"></div>
                 </div>
                 <div className="relative z-10">
                     <Link href="/" className="flex items-center gap-3 mb-16">
-                        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-slate-100 font-bold text-lg">A</div>
+                        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-lg">A</div>
                         <span className="font-bold text-xl text-white">AYUSH Portal</span>
                     </Link>
                     <h2 className="text-4xl font-bold text-white leading-tight mb-6">
@@ -106,17 +106,17 @@ export default function LoginPage() {
                     {/* Mobile Logo */}
                     <div className="lg:hidden flex items-center gap-2 mb-10">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-100 font-bold text-sm">A</div>
-                            <span className="font-bold text-lg text-slate-100">AYUSH Portal</span>
+                            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-sm">A</div>
+                            <span className="font-bold text-lg text-slate-900 dark:text-slate-100">AYUSH Portal</span>
                         </Link>
                     </div>
 
-                    <h1 className="text-2xl font-bold text-slate-100 mb-1">Welcome back</h1>
-                    <p className="text-slate-400 text-sm mb-8">Sign in to your account to continue.</p>
+                    <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-1">Welcome back</h1>
+                    <p className="text-slate-500 dark:text-slate-400 text-sm mb-8">Sign in to your account to continue.</p>
 
                     {/* Role Selector */}
                     <div className="mb-6">
-                        <label className="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Login As</label>
+                        <label className="block text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Login As</label>
                         <div className="grid grid-cols-3 gap-2">
                             {roles.map((role) => (
                                 <button
@@ -124,11 +124,11 @@ export default function LoginPage() {
                                     onClick={() => handleDemoFill(role.value)}
                                     className={`p-3 rounded-xl border-2 text-center transition-all ${selectedRole === role.value
                                         ? "border-primary bg-primary/5"
-                                        : "border-white/10 hover:border-slate-300"
+                                        : "border-slate-200 dark:border-white/10 hover:border-slate-300"
                                         }`}
                                 >
-                                    <span className={`material-icons text-xl ${selectedRole === role.value ? "text-primary-dark" : "text-slate-400"}`}>{role.icon}</span>
-                                    <p className={`text-xs font-medium mt-1 ${selectedRole === role.value ? "text-primary-dark" : "text-slate-400"}`}>{role.label}</p>
+                                    <span className={`material-icons text-xl ${selectedRole === role.value ? "text-primary-dark" : "text-slate-500 dark:text-slate-400"}`}>{role.icon}</span>
+                                    <p className={`text-xs font-medium mt-1 ${selectedRole === role.value ? "text-primary-dark" : "text-slate-500 dark:text-slate-400"}`}>{role.label}</p>
                                 </button>
                             ))}
                         </div>
@@ -136,28 +136,28 @@ export default function LoginPage() {
 
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Email</label>
                             <div className="relative">
-                                <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">email</span>
+                                <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-lg">email</span>
                                 <input
                                     type="email" value={email}
                                     onChange={(e) => { setEmail(e.target.value); setError(""); }}
                                     placeholder="you@example.com"
-                                    className="w-full pl-10 pr-4 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                                    className="w-full pl-10 pr-4 py-2.5 border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
                                 />
                             </div>
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+                            <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">Password</label>
                             <div className="relative">
-                                <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">lock</span>
+                                <span className="material-icons absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 text-lg">lock</span>
                                 <input
                                     type={showPassword ? "text" : "password"} value={password}
                                     onChange={(e) => { setPassword(e.target.value); setError(""); }}
                                     placeholder="••••••••"
-                                    className="w-full pl-10 pr-10 py-2.5 border border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
+                                    className="w-full pl-10 pr-10 py-2.5 border border-slate-200 dark:border-white/10 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/40"
                                 />
-                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-400">
+                                <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400 hover:text-slate-500 dark:text-slate-400">
                                     <span className="material-icons text-lg">{showPassword ? "visibility_off" : "visibility"}</span>
                                 </button>
                             </div>
@@ -172,7 +172,7 @@ export default function LoginPage() {
                         <div className="flex justify-between items-center text-sm">
                             <label className="flex items-center gap-2 cursor-pointer">
                                 <input type="checkbox" defaultChecked className="w-4 h-4 rounded border-slate-300" />
-                                <span className="text-slate-400">Remember me</span>
+                                <span className="text-slate-500 dark:text-slate-400">Remember me</span>
                             </label>
                             <a href="#" className="text-primary-dark font-medium hover:underline">Forgot password?</a>
                         </div>
@@ -181,8 +181,8 @@ export default function LoginPage() {
                             type="submit"
                             disabled={loading}
                             className={`w-full py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${loading
-                                ? "bg-slate-800 text-slate-400 cursor-not-allowed"
-                                : "bg-primary text-slate-100 hover:bg-primary-dark hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"
+                                ? "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed"
+                                : "bg-primary text-slate-900 dark:text-slate-100 hover:bg-primary-dark hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"
                                 }`}
                         >
                             {loading ? (
@@ -207,7 +207,7 @@ export default function LoginPage() {
                         </p>
                     </div>
 
-                    <p className="text-center text-sm text-slate-400 mt-8">
+                    <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-8">
                         Don&apos;t have an account? <Link href="/register" className="text-primary-dark font-semibold hover:underline">Register here</Link>
                     </p>
                 </div>

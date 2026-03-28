@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { useSession, signOut } from "next-auth/react";
 
+import { ThemeToggle } from "./ThemeToggle";
+
 export default function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
@@ -30,69 +32,70 @@ export default function Navbar() {
     const dashboardLink = user?.role === "ADMIN" ? "/admin" : user?.role === "INVESTOR" ? "/investors" : "/dashboard";
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-white/5 shadow-2x shadow-black/50">
+        <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 shadow-2x shadow-black/50 transition-colors duration-300">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3">
                         <div className="bg-primary/10 p-2 rounded-lg">
-                            <span className="material-icons text-emerald-400 text-3xl">spa</span>
+                            <span className="material-icons text-emerald-600 dark:text-emerald-400 text-3xl transition-colors">spa</span>
                         </div>
                         <div className="flex flex-col">
-                            <span className="font-bold text-xl tracking-tight text-slate-100 leading-none">AYUSH Portal</span>
+                            <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-slate-100 leading-none transition-colors">AYUSH Portal</span>
                             <span className="text-xs text-slate-500 font-medium tracking-wide">Ministry of Ayush, Gov. of India</span>
                         </div>
                     </Link>
 
                     {/* Desktop Menu */}
                     <div className="hidden md:flex items-center space-x-8">
-                        <Link href="/" className="text-sm font-medium text-slate-300 hover:text-primary-dark transition-colors">Home</Link>
-                        <Link href="/schemes" className="text-sm font-medium text-slate-300 hover:text-primary-dark transition-colors">Schemes</Link>
-                        <Link href="/dashboard" className="text-sm font-medium text-slate-300 hover:text-primary-dark transition-colors">Startups</Link>
-                        <Link href="/investors" className="text-sm font-medium text-slate-300 hover:text-primary-dark transition-colors">Investors</Link>
+                        <Link href="/" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Home</Link>
+                        <Link href="/schemes" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Schemes</Link>
+                        <Link href="/dashboard" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Startups</Link>
+                        <Link href="/investors" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Investors</Link>
                     </div>
 
                     {/* Auth Area */}
-                    <div className="hidden md:flex items-center gap-3">
+                    <div className="hidden md:flex items-center gap-4">
+                        <ThemeToggle />
                         {user ? (
                             <div className="relative" ref={dropdownRef}>
                                 <button
                                     onClick={() => setProfileOpen(!profileOpen)}
-                                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-[#0a0a0a] transition-colors"
+                                    className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-slate-50 dark:bg-[#0a0a0a] transition-colors"
                                 >
                                     <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                                         <span className="text-xs font-bold text-emerald-400">{initials}</span>
                                     </div>
                                     <div className="text-left hidden lg:block">
-                                        <p className="text-sm font-medium text-slate-100 leading-tight">{user.name}</p>
-                                        <p className="text-[10px] text-slate-400 capitalize">{user.role}</p>
+                                        <p className="text-sm font-medium text-slate-900 dark:text-slate-100 leading-tight">{user.name}</p>
+                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 capitalize">{user.role}</p>
                                     </div>
-                                    <span className="material-icons text-slate-400 text-lg">{profileOpen ? "expand_less" : "expand_more"}</span>
+                                    <span className="material-icons text-slate-500 dark:text-slate-400 text-lg">{profileOpen ? "expand_less" : "expand_more"}</span>
                                 </button>
 
                                 {profileOpen && (
-                                    <div className="absolute right-0 mt-2 w-56 bg-[#111111] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black border border-white/5 py-2 z-50">
-                                        <div className="px-4 py-3 border-b border-white/5">
-                                            <p className="text-sm font-semibold text-slate-100">{user.name}</p>
-                                            <p className="text-xs text-slate-400">{user.email}</p>
+                                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#111111] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black border border-slate-200 dark:border-white/5 py-2 z-50">
+                                        <div className="px-4 py-3 border-b border-slate-200 dark:border-white/5">
+                                            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{user.name}</p>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400">{user.email}</p>
                                         </div>
                                         <Link
                                             href={dashboardLink}
                                             onClick={() => setProfileOpen(false)}
-                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-[#0a0a0a] transition-colors"
+                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-[#0a0a0a] transition-colors"
                                         >
-                                            <span className="material-icons text-lg text-slate-400">dashboard</span>
+                                            <span className="material-icons text-lg text-slate-500 dark:text-slate-400">dashboard</span>
                                             Dashboard
                                         </Link>
                                         <Link
                                             href="/schemes"
                                             onClick={() => setProfileOpen(false)}
-                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-300 hover:bg-[#0a0a0a] transition-colors"
+                                            className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-[#0a0a0a] transition-colors"
                                         >
-                                            <span className="material-icons text-lg text-slate-400">library_books</span>
+                                            <span className="material-icons text-lg text-slate-500 dark:text-slate-400">library_books</span>
                                             Schemes
                                         </Link>
-                                        <div className="border-t border-white/5 mt-1 pt-1">
+                                        <div className="border-t border-slate-200 dark:border-white/5 mt-1 pt-1">
                                             <button
                                                 onClick={() => { setProfileOpen(false); signOut({ callbackUrl: "/login" }); }}
                                                 className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
@@ -107,16 +110,16 @@ export default function Navbar() {
                         ) : (
                             <>
                                 <div className="flex items-center">
-                                    <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-emerald-400 px-3 py-2 transition-colors">Login</Link>
+                                    <Link href="/login" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-400 px-3 py-2 transition-colors">Login</Link>
                                 </div>
-                                <Link href="/register" className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30">
+                                <Link href="/register" className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-slate-900 dark:text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30">
                                     Register Startup
                                 </Link>
                             </>
                         )}
                     </div>
                     <div className="md:hidden flex items-center">
-                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-slate-400 hover:text-slate-300 focus:outline-none">
+                        <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 focus:outline-none">
                             <span className="material-icons">{mobileMenuOpen ? "close" : "menu"}</span>
                         </button>
                     </div>
@@ -125,12 +128,12 @@ export default function Navbar() {
 
             {/* Mobile Menu */}
             {mobileMenuOpen && (
-                <div className="md:hidden bg-[#111111] border-t border-white/5 px-4 py-4 space-y-3">
-                    <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-300 hover:text-primary-dark py-2">Home</Link>
-                    <Link href="/schemes" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-300 hover:text-primary-dark py-2">Schemes</Link>
-                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-300 hover:text-primary-dark py-2">Startups</Link>
-                    <Link href="/investors" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-300 hover:text-primary-dark py-2">Investors</Link>
-                    <hr className="border-white/5" />
+                <div className="md:hidden bg-white dark:bg-[#111111] border-t border-slate-200 dark:border-white/5 px-4 py-4 space-y-3">
+                    <Link href="/" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-dark py-2">Home</Link>
+                    <Link href="/schemes" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-dark py-2">Schemes</Link>
+                    <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-dark py-2">Startups</Link>
+                    <Link href="/investors" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-700 dark:text-slate-300 hover:text-primary-dark py-2">Investors</Link>
+                    <hr className="border-slate-200 dark:border-white/5" />
                     {user ? (
                         <>
                             <div className="flex items-center gap-3 py-2">
@@ -138,19 +141,19 @@ export default function Navbar() {
                                     <span className="text-xs font-bold text-primary-dark">{initials}</span>
                                 </div>
                                 <div>
-                                    <p className="text-sm font-medium text-slate-100">{user.name}</p>
-                                    <p className="text-[10px] text-slate-400 capitalize">{user.role}</p>
+                                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">{user.name}</p>
+                                    <p className="text-[10px] text-slate-500 dark:text-slate-400 capitalize">{user.role}</p>
                                 </div>
                             </div>
-                            <Link href={dashboardLink} onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-400 py-2">Dashboard</Link>
+                            <Link href={dashboardLink} onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-500 dark:text-slate-400 py-2">Dashboard</Link>
                             <button onClick={() => { setMobileMenuOpen(false); signOut({ callbackUrl: "/login" }); }} className="block w-full text-left text-sm font-medium text-red-600 py-2">
                                 Sign Out
                             </button>
                         </>
                     ) : (
                         <>
-                            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-400 py-2">Login</Link>
-                            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="block text-center px-5 py-2.5 text-sm font-medium rounded-lg text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all">
+                            <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-500 dark:text-slate-400 py-2">Login</Link>
+                            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="block text-center px-5 py-2.5 text-sm font-medium rounded-lg text-slate-900 dark:text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all">
                                 Register Startup
                             </Link>
                         </>

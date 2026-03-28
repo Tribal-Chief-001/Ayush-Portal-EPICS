@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
+import { useTheme } from "next-themes";
 import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, PieChart, Pie, Cell } from "recharts";
 import { Activity, ShieldAlert, Target, TrendingUp, Users, Cpu, FileWarning, Globe, PieChart as PieIcon, LineChart } from "lucide-react";
 
@@ -30,6 +31,8 @@ const stageOptions = ["Seed", "Validation", "Early Traction", "Scaling"];
 
 export default function InvestorsPage() {
     const { status } = useSession();
+    const { theme } = useTheme();
+    const isDark = theme === "dark";
     
     const [startups, setStartups] = useState<Startup[]>([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -195,20 +198,20 @@ export default function InvestorsPage() {
     }, [startups]);
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] font-display">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Navbar */}
-            <nav className="sticky top-0 z-50 bg-[#111111] border-b border-white/10">
+            <nav className="sticky top-0 z-50 bg-white dark:bg-[#111111] border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary-dark font-bold text-xs ring-1 ring-primary/30">IP</div>
                         <div className="flex flex-col">
-                            <span className="font-bold text-sm text-slate-100">AYUSH InvestConnect</span>
-                            <span className="text-[10px] text-slate-400 uppercase">Investor Portal</span>
+                            <span className="font-bold text-sm text-slate-900 dark:text-slate-100">AYUSH InvestConnect</span>
+                            <span className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Investor Portal</span>
                         </div>
                     </Link>
                     <div className="hidden md:flex flex-1 max-w-lg mx-8">
-                        <div className="flex items-center w-full bg-[#0a0a0a] rounded-lg border border-white/10 px-3">
-                            <span className="material-icons text-slate-400 text-lg">search</span>
+                        <div className="flex items-center w-full bg-slate-50 dark:bg-[#0a0a0a] rounded-lg border border-slate-200 dark:border-white/10 px-3">
+                            <span className="material-icons text-slate-500 dark:text-slate-400 text-lg">search</span>
                             <input
                                 type="text" value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -217,7 +220,7 @@ export default function InvestorsPage() {
                                 onKeyDown={(e) => e.key === "Enter" && fetchStartups()}
                             />
                             {searchQuery && (
-                                <button onClick={() => { setSearchQuery(""); fetchStartups(); }} className="text-slate-400 hover:text-slate-400">
+                                <button onClick={() => { setSearchQuery(""); fetchStartups(); }} className="text-slate-500 dark:text-slate-400 hover:text-slate-500 dark:text-slate-400">
                                     <span className="material-icons text-sm">close</span>
                                 </button>
                             )}
@@ -239,13 +242,13 @@ export default function InvestorsPage() {
                     <aside className="w-64 flex-shrink-0 hidden lg:block">
                         <div className="sticky top-24">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="font-bold text-lg text-slate-100">Filters</h2>
+                                <h2 className="font-bold text-lg text-slate-900 dark:text-slate-100">Filters</h2>
                                 <button onClick={resetFilters} className="text-xs text-blue-600 font-medium hover:underline">Reset All</button>
                             </div>
 
                             {/* Sector */}
                             <div className="mb-6">
-                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1">
+                                <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1">
                                     <span className="material-icons text-xs">spa</span> Sector
                                 </h3>
                                 <div className="space-y-2.5">
@@ -258,9 +261,9 @@ export default function InvestorsPage() {
                                                     onChange={() => toggleSet(selectedSectors, sector, setSelectedSectors)}
                                                     className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                                 />
-                                                <span className="text-sm text-slate-300 group-hover:text-slate-100">{sector}</span>
+                                                <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:text-slate-100">{sector}</span>
                                             </div>
-                                            <span className="text-xs text-slate-400">{sectorCounts[sector] || 0}</span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400">{sectorCounts[sector] || 0}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -268,7 +271,7 @@ export default function InvestorsPage() {
 
                             {/* Growth Stage */}
                             <div className="mb-6">
-                                <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1">
+                                <h3 className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1">
                                     <span className="material-icons text-xs">trending_up</span> Growth Stage
                                 </h3>
                                 <div className="space-y-2.5">
@@ -280,7 +283,7 @@ export default function InvestorsPage() {
                                                 onChange={() => toggleSet(selectedStages, stage, setSelectedStages)}
                                                 className="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
                                             />
-                                            <span className="text-sm text-slate-300 group-hover:text-slate-100">{stage}</span>
+                                            <span className="text-sm text-slate-700 dark:text-slate-300 group-hover:text-slate-900 dark:text-slate-100">{stage}</span>
                                         </label>
                                     ))}
                                 </div>
@@ -288,8 +291,8 @@ export default function InvestorsPage() {
 
                             {/* Active Filters */}
                             {(selectedSectors.size > 0 || selectedStages.size > 0) && (
-                                <div className="pt-4 border-t border-white/10">
-                                    <p className="text-xs font-bold text-slate-400 uppercase mb-2">Active Filters</p>
+                                <div className="pt-4 border-t border-slate-200 dark:border-white/10">
+                                    <p className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase mb-2">Active Filters</p>
                                     <div className="flex flex-wrap gap-1.5">
                                         {[...Array.from(selectedSectors), ...Array.from(selectedStages)].map((f) => (
                                             <span key={f} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full">
@@ -312,12 +315,12 @@ export default function InvestorsPage() {
                     <div className="flex-1">
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h1 className="text-2xl font-bold text-slate-100">Discover Startups</h1>
-                                <p className="text-sm text-slate-400">Found <span className="text-blue-600 font-bold">{startups.length}</span> startups matching your criteria.</p>
+                                <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100">Discover Startups</h1>
+                                <p className="text-sm text-slate-500 dark:text-slate-400">Found <span className="text-blue-600 font-bold">{startups.length}</span> startups matching your criteria.</p>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-slate-400">
+                            <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
                                 <span>Sort by:</span>
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="border border-white/10 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50">
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="border border-slate-200 dark:border-white/10 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/50">
                                     <option value="recommended">Recommended</option>
                                     <option value="ask_asc">Ask: Low → High</option>
                                     <option value="ask_desc">Ask: High → Low</option>
@@ -337,10 +340,10 @@ export default function InvestorsPage() {
 
                         {/* No Results */}
                         {!isLoading && startups.length === 0 && (
-                            <div className="text-center py-16 bg-[#111111] rounded-xl border border-white/5">
-                                <span className="material-icons text-slate-300 text-5xl mb-4">search_off</span>
-                                <h3 className="text-lg font-bold text-slate-100 mb-2">No startups found</h3>
-                                <p className="text-sm text-slate-400 mb-4">Try adjusting your filters or search query.</p>
+                            <div className="text-center py-16 bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5">
+                                <span className="material-icons text-slate-700 dark:text-slate-300 text-5xl mb-4">search_off</span>
+                                <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-2">No startups found</h3>
+                                <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">Try adjusting your filters or search query.</p>
                                 <button onClick={resetFilters} className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700">Clear Filters</button>
                             </div>
                         )}
@@ -349,7 +352,7 @@ export default function InvestorsPage() {
                             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
                                 {startups.map((startup, index) => {
                                     return (
-                                        <div key={index} className={`bg-white rounded-xl border ${startup.featured ? "border-blue-200 ring-1 ring-blue-100" : "border-white/5"} overflow-hidden hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
+                                        <div key={index} className={`bg-white rounded-xl border ${startup.featured ? "border-blue-200 ring-1 ring-blue-100" : "border-slate-200 dark:border-white/5"} overflow-hidden hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
                                             <div className="p-5">
                                                 <div className="flex items-start justify-between mb-3">
                                                     <div className="flex items-center gap-3">
@@ -357,14 +360,14 @@ export default function InvestorsPage() {
                                                             {startup.initial}
                                                         </div>
                                                         <div>
-                                                            <h3 className="font-bold text-sm text-slate-100">{startup.name}</h3>
-                                                            <p className="text-xs text-slate-400 flex items-center gap-1">
+                                                            <h3 className="font-bold text-sm text-slate-900 dark:text-slate-100">{startup.name}</h3>
+                                                            <p className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
                                                                 <span className="material-icons text-[14px]">location_on</span> {startup.location}
                                                             </p>
                                                         </div>
                                                     </div>
                                                     <button onClick={() => toggleBookmark(startup.id)} className="transition-colors">
-                                                        <span className={`material-icons text-lg ${bookmarked.has(startup.id) ? "text-blue-500" : "text-slate-300 hover:text-blue-500"}`}>
+                                                        <span className={`material-icons text-lg ${bookmarked.has(startup.id) ? "text-blue-500" : "text-slate-700 dark:text-slate-300 hover:text-blue-500"}`}>
                                                             {bookmarked.has(startup.id) ? "bookmark" : "bookmark_border"}
                                                         </span>
                                                     </button>
@@ -374,23 +377,23 @@ export default function InvestorsPage() {
                                                         <span key={tag} className={`px-2 py-0.5 text-[10px] font-medium rounded-full ${startup.tagColors[i]}`}>{tag}</span>
                                                     ))}
                                                 </div>
-                                                <p className="text-xs text-slate-400 leading-relaxed mb-4 line-clamp-3">{startup.desc}</p>
+                                                <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4 line-clamp-3">{startup.desc}</p>
                                                 <div className="flex gap-6 mb-4">
                                                     <div>
-                                                        <p className="text-[10px] text-slate-400 uppercase">Ask</p>
-                                                        <p className="text-sm font-bold text-slate-100">{startup.ask || "Undisclosed"}</p>
+                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Ask</p>
+                                                        <p className="text-sm font-bold text-slate-900 dark:text-slate-100">{startup.ask || "Undisclosed"}</p>
                                                     </div>
                                                     <div>
-                                                        <p className="text-[10px] text-slate-400 uppercase">Revenue</p>
-                                                        <p className="text-sm font-bold text-slate-100">{startup.revenue || "Pre-Rev"}</p>
+                                                        <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Revenue</p>
+                                                        <p className="text-sm font-bold text-slate-900 dark:text-slate-100">{startup.revenue || "Pre-Rev"}</p>
                                                     </div>
                                                 </div>
-                                                <button onClick={() => runOSINT(startup)} className="w-full mb-2 bg-slate-900 border border-slate-700 text-white cursor-pointer py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center hover:bg-slate-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black shadow-slate-900/20 group">
+                                                <button onClick={() => runOSINT(startup)} className="w-full mb-2 bg-slate-900 border border-slate-700 text-white cursor-pointer py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center hover:bg-slate-100 dark:bg-slate-800 shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black shadow-slate-900/20 group">
                                                     <span className="material-icons text-base align-middle mr-1.5 text-blue-400 group-hover:text-amber-400 transition-colors">memory</span> OSINT AI Analysis
                                                 </button>
                                                 <a href={`mailto:${startup.founderEmail}?subject=Interest%20in%20${startup.name}%20from%20AYUSH%20Portal`} className={`w-full cursor-pointer py-2.5 rounded-lg text-sm font-medium transition-all flex items-center justify-center ${startup.featured
                                                     ? "bg-blue-600 text-white hover:bg-blue-700"
-                                                    : "border border-white/10 text-slate-300 hover:bg-[#0a0a0a]"
+                                                    : "border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:bg-[#0a0a0a]"
                                                     }`}>
                                                     {startup.featured ? (
                                                         <><span className="material-icons text-base align-middle mr-1.5">mail</span> Contact Founder</>
@@ -411,15 +414,15 @@ export default function InvestorsPage() {
             {/* OSINT COMMAND CENTER */}
             {osintModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-                    <div className="bg-[#0a0a0a] rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-800 ring-1 ring-white/5 font-sans">
+                    <div className="bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-800 ring-1 ring-white/5 font-sans">
                         <div className="bg-[#111] p-5 border-b border-slate-800 flex justify-between items-center">
                             <div className="flex items-center gap-3">
                                 <Cpu className="w-6 h-6 text-emerald-400 animate-pulse" />
                                 <h2 className="text-white font-bold tracking-widest uppercase text-sm flex items-center gap-2">
-                                    OSINT Intelligence Suite <span className="text-slate-400">|</span> <span className="text-emerald-400">{osintStartup?.name}</span>
+                                    OSINT Intelligence Suite <span className="text-slate-500 dark:text-slate-400">|</span> <span className="text-emerald-400">{osintStartup?.name}</span>
                                 </h2>
                             </div>
-                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-400 hover:text-white transition-colors">
+                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-500 dark:text-slate-400 hover:text-white transition-colors">
                                 <span className="material-icons">close</span>
                             </button>
                         </div>
@@ -427,7 +430,7 @@ export default function InvestorsPage() {
                         <div className="p-0 overflow-y-auto flex-1 !scrollbar-thin !scrollbar-thumb-slate-800 !scrollbar-track-transparent">
                             {osintLoading ? (
                                 <div className="p-8">
-                                    <div className="bg-black text-emerald-500 font-mono text-xs sm:text-sm p-6 rounded-xl border border-emerald-900/30 min-h-[400px] flex flex-col shadow-[0_0_30px_rgba(16,185,129,0.05)_inset]">
+                                    <div className="bg-white dark:bg-black text-emerald-500 font-mono text-xs sm:text-sm p-6 rounded-xl border border-emerald-900/30 min-h-[400px] flex flex-col shadow-[0_0_30px_rgba(16,185,129,0.05)_inset]">
                                         <div className="flex items-center gap-2 mb-6 border-b border-emerald-900/50 pb-4">
                                             <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
                                             <span className="tracking-widest uppercase opacity-70">Live Uplink Established</span>
@@ -442,12 +445,12 @@ export default function InvestorsPage() {
                                     </div>
                                 </div>
                             ) : osintResult ? (
-                                <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 bg-[#0a0a0a] text-slate-300 animate-fade-in">
+                                <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 bg-slate-50 dark:bg-[#0a0a0a] text-slate-700 dark:text-slate-300 animate-fade-in">
                                     {/* Exec Summary */}
                                     <div className="bg-[#111] border border-slate-800/80 rounded-xl p-5 sm:p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
                                         <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]"></div>
                                         <h3 className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-4 flex items-center gap-2"><Globe className="w-4 h-4"/> Executive Summary</h3>
-                                        <p className="text-slate-300 leading-relaxed text-sm md:text-base font-light">{osintResult.executiveSummary}</p>
+                                        <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm md:text-base font-light">{osintResult.executiveSummary}</p>
                                     </div>
                                     
                                     {/* Massive Metrics Grid */}
@@ -456,7 +459,7 @@ export default function InvestorsPage() {
                                         {/* Growth Trend Area Chart */}
                                         <div className="lg:col-span-2 bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
                                             <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
-                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><LineChart className="w-4 h-4 text-sky-400"/> Growth Kinetics</h3>
+                                                <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><LineChart className="w-4 h-4 text-sky-400"/> Growth Kinetics</h3>
                                                 <span className="text-emerald-400 font-mono text-xl font-bold">+{osintResult.metrics?.projectedGrowth}% YoY</span>
                                             </div>
                                             <div className="h-56 w-full mt-4">
@@ -468,8 +471,8 @@ export default function InvestorsPage() {
                                                                 <stop offset="95%" stopColor="#38bdf8" stopOpacity={0}/>
                                                             </linearGradient>
                                                         </defs>
-                                                        <XAxis dataKey="month" stroke="#334155" fontSize={10} tickLine={false} axisLine={false}/>
-                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} itemStyle={{color: '#38bdf8'}} />
+                                                        <XAxis dataKey="month" stroke={isDark ? "#334155" : "#94a3b8"} fontSize={10} tickLine={false} axisLine={false}/>
+                                                        <RechartsTooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#ffffff', border: `1px solid ${isDark ? '#1e293b' : '#e2e8f0'}`, borderRadius: '8px', color: isDark ? '#f8fafc' : '#1e293b', fontSize: '12px'}} itemStyle={{color: '#38bdf8'}} />
                                                         <Area type="monotone" dataKey="value" stroke="#38bdf8" strokeWidth={2} fillOpacity={1} fill="url(#colorValue)" />
                                                     </AreaChart>
                                                 </ResponsiveContainer>
@@ -479,7 +482,7 @@ export default function InvestorsPage() {
                                         {/* Sentiment Pie */}
                                         <div className="bg-[#111] border border-slate-800 rounded-xl p-6 flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
                                             <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
-                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><PieIcon className="w-4 h-4 text-purple-400"/> Web Sentiment</h3>
+                                                <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><PieIcon className="w-4 h-4 text-purple-400"/> Web Sentiment</h3>
                                                 <span className="text-white font-mono text-xl font-bold">{osintResult.metrics?.sentiment?.score}/100</span>
                                             </div>
                                             <div className="flex-1 min-h-[200px] relative w-full flex items-center justify-center -mt-2">
@@ -503,14 +506,14 @@ export default function InvestorsPage() {
                                                                 ))
                                                             }
                                                         </Pie>
-                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} />
+                                                        <RechartsTooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#ffffff', border: `1px solid ${isDark ? '#1e293b' : '#e2e8f0'}`, borderRadius: '8px', color: isDark ? '#f8fafc' : '#1e293b', fontSize: '12px'}} />
                                                     </PieChart>
                                                 </ResponsiveContainer>
                                             </div>
                                             <div className="grid grid-cols-3 gap-2 text-center mt-2 border-t border-slate-800 pt-4">
-                                                <div><p className="text-[10px] text-slate-400 uppercase">Pos</p><p className="text-emerald-400 font-mono text-sm">{osintResult.metrics?.sentiment?.positive}%</p></div>
-                                                <div className="border-l border-r border-slate-800"><p className="text-[10px] text-slate-400 uppercase">Neu</p><p className="text-slate-400 font-mono text-sm">{osintResult.metrics?.sentiment?.neutral}%</p></div>
-                                                <div><p className="text-[10px] text-slate-400 uppercase">Neg</p><p className="text-rose-400 font-mono text-sm">{osintResult.metrics?.sentiment?.negative}%</p></div>
+                                                <div><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Pos</p><p className="text-emerald-400 font-mono text-sm">{osintResult.metrics?.sentiment?.positive}%</p></div>
+                                                <div className="border-l border-r border-slate-800"><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Neu</p><p className="text-slate-500 dark:text-slate-400 font-mono text-sm">{osintResult.metrics?.sentiment?.neutral}%</p></div>
+                                                <div><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Neg</p><p className="text-rose-400 font-mono text-sm">{osintResult.metrics?.sentiment?.negative}%</p></div>
                                             </div>
                                         </div>
                                     </div>
@@ -521,7 +524,7 @@ export default function InvestorsPage() {
                                         {/* Radar Risk Matrix */}
                                         <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black flex flex-col">
                                             <div className="flex justify-between items-center mb-2 border-b border-slate-800 pb-4">
-                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-rose-400"/> Risk Matrix</h3>
+                                                <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-rose-400"/> Risk Matrix</h3>
                                                 <span className={`px-3 py-1 text-xs font-bold rounded shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black ${['Critical', 'High'].includes(osintResult.riskAnalysis?.overall) ? 'border border-rose-500/30 text-rose-400 bg-rose-500/10 shadow-rose-900/20' : osintResult.riskAnalysis?.overall === 'Moderate' ? 'border border-amber-500/30 text-amber-400 bg-amber-500/10 shadow-amber-900/20' : 'border border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-emerald-900/20'}`}>
                                                     {osintResult.riskAnalysis?.overall} Threat
                                                 </span>
@@ -529,14 +532,14 @@ export default function InvestorsPage() {
                                             <div className="h-64 w-full mt-4 -ml-4 flex-1">
                                                 <ResponsiveContainer width="100%" height="100%">
                                                     <RadarChart cx="50%" cy="50%" outerRadius="75%" data={osintResult.riskAnalysis?.radar || []}>
-                                                        <PolarGrid stroke="#334155" strokeDasharray="3 3"/>
-                                                        <PolarAngleAxis dataKey="category" tick={{fill: '#94a3b8', fontSize: 11, fontWeight: 500}} />
+                                                        <PolarGrid stroke={isDark ? "#334155" : "#e2e8f0"} strokeDasharray="3 3"/>
+                                                        <PolarAngleAxis dataKey="category" tick={{fill: isDark ? '#94a3b8' : '#64748b', fontSize: 11, fontWeight: 500}} />
                                                         <Radar name="Severity" dataKey="score" stroke="#f43f5e" strokeWidth={2} fill="#f43f5e" fillOpacity={0.2} />
-                                                        <RechartsTooltip contentStyle={{backgroundColor: '#0f172a', border: '1px solid #1e293b', borderRadius: '8px', color: '#f8fafc', fontSize: '12px'}} />
+                                                        <RechartsTooltip contentStyle={{backgroundColor: isDark ? '#0f172a' : '#ffffff', border: `1px solid ${isDark ? '#1e293b' : '#e2e8f0'}`, borderRadius: '8px', color: isDark ? '#f8fafc' : '#1e293b', fontSize: '12px'}} />
                                                     </RadarChart>
                                                 </ResponsiveContainer>
                                             </div>
-                                            <div className="text-xs text-slate-400 leading-relaxed border-t border-slate-800/80 pt-5 mt-4 bg-rose-950/10 p-4 rounded-lg">
+                                            <div className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-800/80 pt-5 mt-4 bg-rose-950/10 p-4 rounded-lg">
                                                 <span className="text-rose-400 font-bold flex items-center gap-1 mb-2"><FileWarning className="w-3 h-3"/> REGULATORY FLAG:</span> 
                                                 <p className="font-light italic">{osintResult.riskAnalysis?.regulatoryNotes}</p>
                                             </div>
@@ -546,13 +549,13 @@ export default function InvestorsPage() {
                                         <div className="space-y-6">
                                             <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black relative overflow-hidden">
                                                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl"></div>
-                                                <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest mb-5 flex items-center gap-2 border-b border-slate-800 pb-4"><Target className="w-4 h-4 text-amber-400"/> Competitor Mapping</h3>
+                                                <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest mb-5 flex items-center gap-2 border-b border-slate-800 pb-4"><Target className="w-4 h-4 text-amber-400"/> Competitor Mapping</h3>
                                                 <div className="space-y-3">
                                                     {osintResult.competitors?.map((comp: any, i: number) => (
-                                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-[#141414] border border-slate-800/80 hover:border-slate-700 transition-colors">
-                                                            <span className="text-sm font-medium text-slate-200 mb-2 sm:mb-0">{comp.name}</span>
+                                                        <div key={i} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-lg bg-slate-100 dark:bg-[#141414] border border-slate-800/80 hover:border-slate-700 transition-colors">
+                                                            <span className="text-sm font-medium text-slate-800 dark:text-slate-200 mb-2 sm:mb-0">{comp.name}</span>
                                                             <div className="flex items-center gap-4">
-                                                                <span className="text-xs text-slate-400 font-mono tracking-wider">{comp.marketShare}% Share</span>
+                                                                <span className="text-xs text-slate-500 dark:text-slate-400 font-mono tracking-wider">{comp.marketShare}% Share</span>
                                                                 <span className={`text-[10px] uppercase font-bold px-2 py-0.5 rounded tracking-wider ${comp.threatLevel === 'High' ? 'text-rose-400 bg-rose-400/10 border border-rose-400/20' : comp.threatLevel === 'Medium' ? 'text-amber-400 bg-amber-400/10 border border-amber-400/20' : 'text-emerald-400 bg-emerald-400/10 border border-emerald-400/20'}`}>
                                                                     {comp.threatLevel}
                                                                 </span>
@@ -565,10 +568,10 @@ export default function InvestorsPage() {
                                             <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black relative overflow-hidden">
                                                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
                                                 <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
-                                                    <h3 className="text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><Users className="w-4 h-4 text-blue-400"/> Founder Intelligence</h3>
+                                                    <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><Users className="w-4 h-4 text-blue-400"/> Founder Intelligence</h3>
                                                     <span className="text-blue-400 font-mono text-lg font-bold shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black shadow-blue-900/20">{osintResult.founderIntelligence?.credibilityScore}/100 </span>
                                                 </div>
-                                                <p className="text-sm text-slate-300 leading-relaxed font-light">{osintResult.founderIntelligence?.background}</p>
+                                                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed font-light">{osintResult.founderIntelligence?.background}</p>
                                             </div>
                                         </div>
 
@@ -580,7 +583,7 @@ export default function InvestorsPage() {
                                         <FileWarning className="w-8 h-8 text-rose-500 animate-pulse" />
                                     </div>
                                     <p className="text-rose-400 font-mono text-sm uppercase tracking-widest mb-2 font-bold">OSINT Telemetry Failed</p>
-                                    <p className="text-xs text-slate-400 max-w-sm">Unable to resolve connection with intelligence database. Verify uplink protocols and API authorization.</p>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm">Unable to resolve connection with intelligence database. Verify uplink protocols and API authorization.</p>
                                 </div>
                             )}
                         </div>

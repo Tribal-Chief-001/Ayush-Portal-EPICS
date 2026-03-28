@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 type TailwindConfig = {
     content: string[];
+    darkMode?: "class" | "media";
     theme: { extend: Record<string, any> };
     plugins: any[];
 };
@@ -10,6 +10,7 @@ const config: TailwindConfig = {
         "./components/**/*.{js,ts,jsx,tsx,mdx}",
         "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
+    darkMode: "class",
     theme: {
         extend: {
             colors: {
