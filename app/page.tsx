@@ -13,8 +13,8 @@ export default function Home() {
                     <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center">
                         {/* Text Content */}
                         <div className="max-w-2xl">
-                            <div className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary-dark mb-6 ring-1 ring-inset ring-primary/20">
-                                <span className="mr-2">🎉</span> Smart India Hackathon 2024
+                            <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-primary-dark font-medium text-sm mb-6 border border-primary/20">
+                                <span className="mr-2">🇮🇳</span> National AYUSH Startup Initiative
                             </div>
                             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 mb-6">
                                 Empowering the Future of{" "}

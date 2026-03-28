@@ -176,8 +176,9 @@ export default function SchemesPage() {
 
             {/* Hero */}
             <section className="bg-gradient-to-b from-green-50 to-background-light py-16 text-center">
-                <span className="px-3 py-1 bg-primary/20 text-primary-dark text-xs font-bold rounded-full uppercase tracking-wider">Smart India Hackathon 2024</span>
-                <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mt-6 mb-4">
+            <div className="container mx-auto px-6 relative z-10">
+                <span className="px-3 py-1 bg-primary/20 text-primary-dark text-xs font-bold rounded-full uppercase tracking-wider">Government of India Initiative</span>
+                <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4 mb-6">
                     Empowering <span className="text-primary-dark">AYUSH</span> Innovations
                 </h1>
                 <p className="text-slate-600 max-w-2xl mx-auto mb-8">
@@ -205,6 +206,7 @@ export default function SchemesPage() {
                         <button key={t} onClick={() => setSearchQuery(t)} className="text-slate-500 hover:text-primary-dark transition-colors">{t}</button>
                     ))}
                 </div>
+            </div>
             </section>
 
             {/* Category Filter */}
@@ -359,9 +361,9 @@ export default function SchemesPage() {
                             </ul>
                         </div>
                     </div>
-                    <div className="border-t border-slate-200 pt-6 text-center text-xs text-slate-400">
-                        © 2024 Ministry of AYUSH. All rights reserved. | Smart India Hackathon Prototype
-                    </div>
+                    <div className="border-t border-gray-100 flex justify-center py-6 text-sm text-gray-500 font-medium">
+                        © 2024 Ministry of AYUSH. All rights reserved. | Official Registration Portal
+                </div>
                 </div>
             </footer>
         </div>

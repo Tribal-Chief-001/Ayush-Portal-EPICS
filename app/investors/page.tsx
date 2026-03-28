@@ -195,10 +195,10 @@ export default function InvestorsPage() {
             <nav className="sticky top-0 z-50 bg-white border-b border-slate-200">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">A</div>
+                        <div className="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary-dark font-bold text-xs ring-1 ring-primary/30">IP</div>
                         <div className="flex flex-col">
                             <span className="font-bold text-sm text-slate-900">AYUSH InvestConnect</span>
-                            <span className="text-[10px] text-slate-400 uppercase">SIH 2024 Portal</span>
+                            <span className="text-[10px] text-slate-400 uppercase">Investor Portal</span>
                         </div>
                     </Link>
                     <div className="hidden md:flex flex-1 max-w-lg mx-8">

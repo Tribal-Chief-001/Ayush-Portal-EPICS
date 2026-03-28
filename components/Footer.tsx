@@ -67,7 +67,7 @@ export default function Footer() {
                     </p>
                     <div className="flex items-center gap-2 text-xs text-slate-400">
                         <span>Designed for</span>
-                        <span className="font-bold text-slate-600">SIH 2024</span>
+                        <span className="font-bold text-slate-600">AYUSH</span>
                     </div>
                 </div>
             </div>

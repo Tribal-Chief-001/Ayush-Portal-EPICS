@@ -200,8 +200,8 @@ export default function RegisterPage() {
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-900 font-bold text-sm">A</div>
                         <span className="font-bold text-lg text-slate-900">AYUSH Startup <span className="text-primary-dark">Portal</span></span>
                     </Link>
-                    <div className="flex items-center gap-4 text-sm text-slate-500">
-                        <span className="hidden sm:inline">Smart India Hackathon 2024</span>
+                    <div className="flex items-center gap-4 text-sm font-medium text-green-700 bg-green-50 px-4 py-2 rounded-lg">
+                        <span className="hidden sm:inline">Ministry of AYUSH Portal</span>
                         <Link href="/login" className="px-4 py-1.5 border border-slate-200 rounded-lg hover:bg-slate-50">Login</Link>
                     </div>
                 </div>
