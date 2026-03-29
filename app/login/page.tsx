@@ -10,9 +10,9 @@ import { useToast } from "@/context/ToastContext";
 type Role = "startup" | "investor" | "admin";
 
 const roles: { value: Role; label: string; icon: string; desc: string; color: string }[] = [
-    { value: "startup", label: "Startup Founder", icon: "rocket_launch", desc: "Register and manage your AYUSH startup", color: "bg-green-50 text-green-700 border-green-200" },
-    { value: "investor", label: "Investor", icon: "account_balance", desc: "Discover and invest in AYUSH ventures", color: "bg-blue-50 text-blue-700 border-blue-200" },
-    { value: "admin", label: "Administrator", icon: "admin_panel_settings", desc: "Review and manage applications", color: "bg-purple-50 text-purple-700 border-purple-200" },
+    { value: "startup", label: "Startup Founder", icon: "rocket_launch", desc: "Register and manage your AYUSH startup", color: "bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 border-green-200 dark:border-green-500/20" },
+    { value: "investor", label: "Investor", icon: "account_balance", desc: "Discover and invest in AYUSH ventures", color: "bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20" },
+    { value: "admin", label: "Administrator", icon: "admin_panel_settings", desc: "Review and manage applications", color: "bg-purple-50 dark:bg-purple-500/10 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-500/20" },
 ];
 
 const demoAccounts: Record<Role, { email: string; password: string }> = {
@@ -168,7 +168,7 @@ export default function LoginPage() {
                         </div>
 
                         {error && (
-                            <div className="flex items-center gap-2 text-red-600 bg-red-50 rounded-lg p-3 text-sm">
+                            <div className="flex items-center gap-2 text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-500/10 rounded-lg p-3 text-sm border border-red-200 dark:border-red-500/20">
                                 <span className="material-icons text-sm">error</span> {error}
                             </div>
                         )}

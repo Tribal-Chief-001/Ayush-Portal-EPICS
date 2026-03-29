@@ -256,9 +256,9 @@ export default function DashboardPage() {
                         {/* Quick Actions */}
                         <div className="mt-6 grid sm:grid-cols-3 gap-4">
                             {[
-                                { icon: "upload_file", label: "Upload Documents", desc: "Add missing certifications", link: "/register", color: "text-blue-600", bg: "bg-blue-50" },
-                                { icon: "smart_toy", label: "AI Support", desc: "Get help with your application", link: "/dashboard/support", color: "text-green-600", bg: "bg-green-50" },
-                                { icon: "library_books", label: "Browse Schemes", desc: "Find funding opportunities", link: "/schemes", color: "text-purple-600", bg: "bg-purple-50" },
+                                { icon: "upload_file", label: "Upload Documents", desc: "Add missing certifications", link: "/register", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
+                                { icon: "smart_toy", label: "AI Support", desc: "Get help with your application", link: "/dashboard/support", color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-500/10" },
+                                { icon: "library_books", label: "Browse Schemes", desc: "Find funding opportunities", link: "/schemes", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500/10" },
                             ].map((action) => (
                                 <Link key={action.label} href={action.link} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-all hover:-translate-y-0.5 group">
                                     <div className={`w-10 h-10 rounded-lg ${action.bg} flex items-center justify-center mb-3`}>

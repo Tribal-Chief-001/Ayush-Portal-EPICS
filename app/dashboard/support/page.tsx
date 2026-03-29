@@ -40,9 +40,9 @@ const getNow = () => {
 };
 
 const schemes = [
-    { icon: "monetization_on", title: "National AYUSH Mission", desc: "Financial assistance up to ₹50 Lakhs", color: "text-green-600", bg: "bg-green-50" },
-    { icon: "science", title: "BIRAC BIG Grant", desc: "Biotechnology research funding", color: "text-blue-600", bg: "bg-blue-50" },
-    { icon: "school", title: "AYUSH Scholarship", desc: "Education & research support", color: "text-purple-600", bg: "bg-purple-50" },
+    { icon: "monetization_on", title: "National AYUSH Mission", desc: "Financial assistance up to ₹50 Lakhs", color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-500/10" },
+    { icon: "science", title: "BIRAC BIG Grant", desc: "Biotechnology research funding", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
+    { icon: "school", title: "AYUSH Scholarship", desc: "Education & research support", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500/10" },
 ];
 
 export default function SupportPage() {
