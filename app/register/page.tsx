@@ -170,7 +170,7 @@ export default function RegisterPage() {
     // ─── SUCCESS SCREEN ──────────────────────────────────────────
     if (submitted) {
         return (
-            <div className="min-h-screen bg-background-light font-display flex items-center justify-center">
+            <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display flex items-center justify-center">
                 <div className="max-w-md text-center p-10">
                     <div className="w-20 h-20 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6 animate-bounce">
                         <span className="material-icons text-primary-dark text-4xl">check_circle</span>
@@ -192,7 +192,7 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background-light font-display">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Header */}
             <header className="bg-white dark:bg-[#111111] border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">

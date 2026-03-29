@@ -85,7 +85,7 @@ export default function SupportPage() {
     };
 
     return (
-        <div className="flex h-screen bg-background-light font-display">
+        <div className="flex h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Sidebar */}
             <aside className="w-72 bg-white dark:bg-[#111111] border-r border-slate-200 dark:border-white/10 hidden lg:flex flex-col">
                 <div className="p-5 border-b border-slate-200 dark:border-white/5">

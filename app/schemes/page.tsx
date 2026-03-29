@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const categories = ["All Resources", "Funding & Grants", "Research Papers", "Certifications", "Incubation", "Policy"];
 
@@ -154,7 +155,7 @@ export default function SchemesPage() {
     }, [activeCategory, searchQuery, sortBy]);
 
     return (
-        <div className="min-h-screen bg-background-light font-display">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Navbar */}
             <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -259,7 +260,7 @@ export default function SchemesPage() {
                     {filtered.map((resource, index) => {
                         const origIdx = resources.indexOf(resource);
                         return (
-                            <div key={index} className={`bg-white rounded-xl border border-slate-200 dark:border-white/5 border-l-4 ${resource.borderColor} overflow-hidden hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
+                            <div key={index} className={`bg-white dark:bg-[#111] rounded-xl border border-slate-200 dark:border-slate-800 border-l-4 ${resource.borderColor} overflow-hidden hover:shadow-xl dark:hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] dark:shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
                                 <div className="p-6">
                                     <div className="flex justify-between items-start mb-3">
                                         <span className={`px-2.5 py-0.5 text-xs font-semibold rounded-full border ${resource.typeColor}`}>{resource.type}</span>

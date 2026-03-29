@@ -1,7 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSession } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, PieChart, Pie, Cell } from "recharts";
@@ -352,7 +354,7 @@ export default function InvestorsPage() {
                             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
                                 {startups.map((startup, index) => {
                                     return (
-                                        <div key={index} className={`bg-white rounded-xl border ${startup.featured ? "border-blue-200 ring-1 ring-blue-100" : "border-slate-200 dark:border-white/5"} overflow-hidden hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
+                                        <div key={index} className={`bg-white dark:bg-[#111] rounded-xl border ${startup.featured ? "border-blue-200 dark:border-blue-500/30 ring-1 ring-blue-100 dark:ring-blue-500/20" : "border-slate-200 dark:border-slate-800"} overflow-hidden hover:shadow-xl dark:hover:shadow-[0_15px_40px_rgba(0,0,0,0.8)] dark:shadow-black transition-all duration-200 hover:-translate-y-0.5`}>
                                             <div className="p-5">
                                                 <div className="flex items-start justify-between mb-3">
                                                     <div className="flex items-center gap-3">

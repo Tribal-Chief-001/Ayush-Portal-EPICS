@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
@@ -102,7 +103,7 @@ export default function AdminPage() {
 
     if (isLoading || sessionStatus === "loading") {
         return (
-            <div className="min-h-screen bg-background-light flex items-center justify-center">
+            <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] flex items-center justify-center">
                 <svg className="animate-spin h-8 w-8 text-primary" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
@@ -112,7 +113,7 @@ export default function AdminPage() {
     }
 
     return (
-        <div className="min-h-screen bg-background-light font-display">
+        <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Header */}
             <header className="bg-white dark:bg-[#111111] border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
@@ -124,6 +125,7 @@ export default function AdminPage() {
                         </div>
                     </Link>
                     <div className="flex items-center gap-4">
+                        <ThemeToggle />
                         <Link href="/dashboard" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300">Dashboard</Link>
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                             <span className="material-icons text-primary-dark text-sm">admin_panel_settings</span>
