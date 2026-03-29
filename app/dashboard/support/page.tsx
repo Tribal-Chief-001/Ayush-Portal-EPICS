@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 
 interface Message {
@@ -105,6 +105,9 @@ export default function SupportPage() {
                     <Link href="/schemes" className="flex items-center gap-3 px-5 py-2.5 text-sm text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:bg-[#0a0a0a]">
                         <span className="material-icons text-lg">library_books</span> Schemes
                     </Link>
+                    <button onClick={() => signOut({ callbackUrl: '/' })} className="w-full flex items-center gap-3 px-5 py-2.5 text-sm text-red-500 hover:text-red-600 dark:hover:text-red-400 hover:bg-slate-50 dark:hover:bg-[#141414] transition-colors">
+                        <span className="material-icons text-lg">logout</span> Sign Out
+                    </button>
 
                     {/* Application Progress */}
                     <div className="mx-5 mt-6 p-4 bg-slate-50 dark:bg-[#0a0a0a] rounded-xl">

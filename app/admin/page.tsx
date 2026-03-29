@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useMemo, useEffect } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 
@@ -126,7 +126,8 @@ export default function AdminPage() {
                     </Link>
                     <div className="flex items-center gap-4">
                         <ThemeToggle />
-                        <Link href="/dashboard" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300">Dashboard</Link>
+                        <Link href="/dashboard" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:text-slate-300 mr-2">Dashboard</Link>
+                        <button onClick={() => signOut({ callbackUrl: '/' })} className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition-colors">Sign Out</button>
                         <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
                             <span className="material-icons text-primary-dark text-sm">admin_panel_settings</span>
                         </div>
