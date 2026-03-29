@@ -158,10 +158,10 @@ export default function DashboardPage() {
                         {/* Stats Row */}
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                             {[
-                                { icon: "description", label: "Application", value: stats?.application || "N/A", color: "text-amber-600", bg: "bg-amber-50" },
-                                { icon: "folder", label: "Documents", value: stats?.documents || "0", color: "text-blue-600", bg: "bg-blue-50" },
-                                { icon: "schedule", label: "Est. Completion", value: stats?.estCompletion || "N/A", color: "text-green-600", bg: "bg-green-50" },
-                                { icon: "verified", label: "Certification", value: stats?.certification || "N/A", color: "text-purple-600", bg: "bg-purple-50" },
+                                { icon: "description", label: "Application", value: stats?.application || "N/A", color: "text-amber-600 dark:text-amber-400", bg: "bg-amber-50 dark:bg-amber-500/10" },
+                                { icon: "folder", label: "Documents", value: stats?.documents || "0", color: "text-blue-600 dark:text-blue-400", bg: "bg-blue-50 dark:bg-blue-500/10" },
+                                { icon: "schedule", label: "Est. Completion", value: stats?.estCompletion || "N/A", color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-500/10" },
+                                { icon: "verified", label: "Certification", value: stats?.certification || "N/A", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-50 dark:bg-purple-500/10" },
                             ].map((stat) => (
                                 <div key={stat.label} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-4 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-shadow">
                                     <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center mb-3`}>

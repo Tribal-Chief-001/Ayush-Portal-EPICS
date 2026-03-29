@@ -140,9 +140,9 @@ export default function AdminPage() {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                     {[
                         { label: "Total Applications", value: counts.all, icon: "description", color: "text-slate-500 dark:text-slate-400", bg: "bg-slate-50 dark:bg-[#0a0a0a]" },
-                        { label: "Pending Review", value: counts.pending, icon: "pending", color: "text-yellow-600", bg: "bg-yellow-50" },
-                        { label: "Approved", value: counts.approved, icon: "check_circle", color: "text-green-600", bg: "bg-green-50" },
-                        { label: "Rejected", value: counts.rejected, icon: "cancel", color: "text-red-600", bg: "bg-red-50" },
+                        { label: "Pending Review", value: counts.pending, icon: "pending", color: "text-yellow-600 dark:text-yellow-400", bg: "bg-yellow-50 dark:bg-yellow-500/10" },
+                        { label: "Approved", value: counts.approved, icon: "check_circle", color: "text-green-600 dark:text-green-400", bg: "bg-green-50 dark:bg-green-500/10" },
+                        { label: "Rejected", value: counts.rejected, icon: "cancel", color: "text-red-600 dark:text-red-400", bg: "bg-red-50 dark:bg-red-500/10" },
                     ].map((stat) => (
                         <div key={stat.label} className={`${stat.bg} rounded-xl p-5 border border-slate-100`}>
                             <div className="flex items-center justify-between mb-2">
@@ -230,7 +230,7 @@ export default function AdminPage() {
                                                                 <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "APPROVED", app.id); }} className="p-1.5 bg-green-50 text-green-600 rounded-lg hover:bg-green-100 transition-colors" title="Approve">
                                                                     <span className="material-icons text-sm">check</span>
                                                                 </button>
-                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "CHANGES_REQUESTED", app.id); }} className="p-1.5 bg-amber-50 text-amber-600 rounded-lg hover:bg-amber-100 transition-colors" title="Request Changes">
+                                                                <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "CHANGES_REQUESTED", app.id); }} className="p-1.5 bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-500/20 transition-colors" title="Request Changes">
                                                                     <span className="material-icons text-sm">edit</span>
                                                                 </button>
                                                                 <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "REJECTED", app.id); }} className="p-1.5 bg-red-50 text-red-600 rounded-lg hover:bg-red-100 transition-colors" title="Reject">
@@ -249,7 +249,7 @@ export default function AdminPage() {
                                                             </button>
                                                         )}
                                                         {app.dbStatus === "CHANGES_REQUESTED" && (
-                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "PENDING", app.id); }} className="px-3 py-1 text-xs text-amber-600 bg-amber-50 rounded-lg hover:bg-amber-100 font-medium">
+                                                            <button onClick={(e) => { e.stopPropagation(); updateStatus(app.dbId, "PENDING", app.id); }} className="px-3 py-1 text-xs text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 rounded-lg hover:bg-amber-100 dark:hover:bg-amber-500/20 font-medium">
                                                                 Re-review
                                                             </button>
                                                         )}

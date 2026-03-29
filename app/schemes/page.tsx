@@ -170,13 +170,14 @@ export default function SchemesPage() {
                         <Link href="/investors" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100">Investors</Link>
                     </div>
                     <div className="flex items-center gap-3">
+                        <ThemeToggle />
                         <Link href="/login" className="px-4 py-1.5 bg-primary rounded-full text-sm font-semibold text-slate-900 dark:text-slate-100 hover:bg-primary-dark hover:text-white transition-all">Login</Link>
                     </div>
                 </div>
             </nav>
 
             {/* Hero */}
-            <section className="bg-gradient-to-b from-green-50 to-background-light py-16 text-center">
+            <section className="bg-gradient-to-b from-green-50 dark:from-[#0a0a0a] to-slate-50 dark:to-[#111111] py-16 text-center border-b border-transparent dark:border-white/5">
             <div className="container mx-auto px-6 relative z-10">
                 <span className="px-3 py-1 bg-primary/20 text-primary-dark text-xs font-bold rounded-full uppercase tracking-wider">Government of India Initiative</span>
                 <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mt-4 mb-6">

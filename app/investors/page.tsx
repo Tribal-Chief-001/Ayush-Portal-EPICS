@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { useTheme } from "next-themes";
 import { AreaChart, Area, XAxis, YAxis, Tooltip as RechartsTooltip, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, PieChart, Pie, Cell } from "recharts";
 import { Activity, ShieldAlert, Target, TrendingUp, Users, Cpu, FileWarning, Globe, PieChart as PieIcon, LineChart } from "lucide-react";
@@ -228,8 +228,12 @@ export default function InvestorsPage() {
                         </div>
                     </div>
                     <div className="flex items-center gap-3">
+                        <ThemeToggle />
                         {status === "authenticated" ? (
-                            <Link href="/dashboard" className="px-4 py-1.5 border border-blue-200 text-blue-700 rounded-lg text-sm font-medium hover:bg-blue-50 transition-colors">Dashboard</Link>
+                            <>
+                                <button onClick={() => signOut({ callbackUrl: '/' })} className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 mr-2 transition-colors">Sign Out</button>
+                                <Link href="/dashboard" className="px-4 py-1.5 border border-blue-200 dark:border-white/10 text-blue-700 dark:text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-50 dark:hover:bg-white/5 transition-colors">Dashboard</Link>
+                            </>
                         ) : (
                             <Link href="/login" className="px-4 py-1.5 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">Login</Link>
                         )}

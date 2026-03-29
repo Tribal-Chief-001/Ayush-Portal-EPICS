@@ -200,9 +200,10 @@ export default function RegisterPage() {
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-sm">A</div>
                         <span className="font-bold text-lg text-slate-900 dark:text-slate-100">AYUSH Startup <span className="text-primary-dark">Portal</span></span>
                     </Link>
-                    <div className="flex items-center gap-4 text-sm font-medium text-green-700 bg-green-50 px-4 py-2 rounded-lg">
-                        <span className="hidden sm:inline">Ministry of AYUSH Portal</span>
-                        <Link href="/login" className="px-4 py-1.5 border border-slate-200 dark:border-white/10 rounded-lg hover:bg-slate-50 dark:bg-[#0a0a0a]">Login</Link>
+                    <div className="flex items-center gap-4 text-sm font-medium text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-white/5 px-4 py-2 rounded-lg">
+                        <ThemeToggle />
+                        <span className="hidden sm:inline border-l border-slate-200 dark:border-white/10 pl-4 ml-2">Ministry of AYUSH Portal</span>
+                        <Link href="/login" className="px-4 py-1.5 border border-slate-200 dark:border-white/10 rounded-lg hover:bg-slate-50 dark:bg-white/5 transition-colors">Login</Link>
                     </div>
                 </div>
             </header>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, FormEvent } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
 import { useToast } from "@/context/ToastContext";
@@ -67,7 +68,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-background-light to-amber-50 font-display flex">
+        <div className="min-h-screen bg-gradient-to-br from-green-50 dark:from-[#0a0a0a] via-slate-50 dark:via-[#111111] to-amber-50 dark:to-[#0a0a0a] font-display flex">
             {/* Left Panel — Branding */}
             <div className="hidden lg:flex lg:w-5/12 bg-primary-dark flex-col justify-between p-12 relative overflow-hidden">
                 <div className="absolute inset-0 opacity-10">
@@ -76,9 +77,12 @@ export default function LoginPage() {
                 </div>
                 <div className="relative z-10">
                     <Link href="/" className="flex items-center gap-3 mb-16">
-                        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-lg">A</div>
+                        <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-lg border border-white/20">A</div>
                         <span className="font-bold text-xl text-white">AYUSH Portal</span>
                     </Link>
+                    <div className="absolute top-8 right-8 lg:top-12 lg:right-12">
+                        <ThemeToggle />
+                    </div>
                     <h2 className="text-4xl font-bold text-white leading-tight mb-6">
                         Empowering Traditional Medicine Innovation
                     </h2>
@@ -200,10 +204,10 @@ export default function LoginPage() {
                     </form>
 
                     {/* Demo hint */}
-                    <div className="mt-6 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                        <p className="text-xs text-amber-700 flex items-center gap-1">
+                    <div className="mt-6 p-3 bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 rounded-lg">
+                        <p className="text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1">
                             <span className="material-icons text-xs">tips_and_updates</span>
-                            <strong>Demo Mode:</strong> Click any role above to auto-fill credentials, then sign in.
+                            <strong className="text-amber-900 dark:text-amber-300">Demo Mode:</strong> Click any role above to auto-fill credentials, then sign in.
                         </p>
                     </div>
 
