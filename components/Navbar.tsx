@@ -32,7 +32,7 @@ export default function Navbar() {
     const dashboardLink = user?.role === "ADMIN" ? "/admin" : user?.role === "INVESTOR" ? "/investors" : "/dashboard";
 
     return (
-        <nav className="sticky top-0 z-50 w-full bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 shadow-2x shadow-black/50 transition-colors duration-300">
+        <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl border-b border-black/5 dark:border-white/5 shadow-lg py-3" : "bg-transparent py-5"}`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between h-20 items-center">
                     {/* Logo */}

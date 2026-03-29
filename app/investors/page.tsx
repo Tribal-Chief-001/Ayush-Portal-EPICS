@@ -201,7 +201,7 @@ export default function InvestorsPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Navbar */}
-            <nav className="sticky top-0 z-50 bg-white dark:bg-[#111111] border-b border-slate-200 dark:border-white/10">
+            <nav className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded bg-primary/20 flex items-center justify-center text-primary-dark font-bold text-xs ring-1 ring-primary/30">IP</div>

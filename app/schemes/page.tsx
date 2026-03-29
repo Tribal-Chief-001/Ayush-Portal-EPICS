@@ -157,7 +157,7 @@ export default function SchemesPage() {
     return (
         <div className="min-h-screen bg-slate-50 dark:bg-[#0a0a0a] font-display">
             {/* Navbar */}
-            <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
+            <nav className="sticky top-0 z-50 bg-white/90 dark:bg-black/90 backdrop-blur-md border-b border-slate-200 dark:border-white/10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
                     <Link href="/" className="flex items-center gap-2">
                         <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-slate-900 dark:text-slate-100 font-bold text-sm">A</div>
@@ -166,7 +166,7 @@ export default function SchemesPage() {
                     </Link>
                     <div className="hidden md:flex items-center space-x-6">
                         <Link href="/dashboard" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100">Dashboard</Link>
-                        <Link href="/schemes" className="text-sm font-semibold text-primary-dark border-b-2 border-primary pb-0.5">Schemes & Grants</Link>
+                        <Link href="/schemes" className="text-sm font-semibold text-primary-dark dark:text-primary border-b-2 border-primary pb-0.5">Schemes & Grants</Link>
                         <Link href="/investors" className="text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:text-slate-100">Investors</Link>
                     </div>
                     <div className="flex items-center gap-3">
@@ -181,7 +181,7 @@ export default function SchemesPage() {
             <div className="container mx-auto px-6 relative z-10">
                 <span className="px-3 py-1 bg-primary/20 text-primary-dark text-xs font-bold rounded-full uppercase tracking-wider">Government of India Initiative</span>
                 <h1 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-slate-100 mt-4 mb-6">
-                    Empowering <span className="text-primary-dark">AYUSH</span> Innovations
+                    Empowering <span className="text-primary-dark dark:text-primary">AYUSH</span> Innovations
                 </h1>
                 <p className="text-slate-500 dark:text-slate-400 max-w-2xl mx-auto mb-8">
                     Access a central library of government schemes, research grants, and policy frameworks designed to accelerate your traditional medicine startup.
