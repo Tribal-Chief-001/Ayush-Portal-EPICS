@@ -23,7 +23,7 @@ export default function Home() {
                             <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/10 text-emerald-400 font-medium text-sm mb-6 border border-primary/20 shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/10">
                                 <span className="mr-2">🇮🇳</span> National AYUSH Startup Initiative
                             </div>
-                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6">
+                            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white mb-6">
                                 Empowering the Future of{" "}
                                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-primary">
                                     Traditional Medicine
@@ -67,14 +67,14 @@ export default function Home() {
                         >
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-primary/20 via-transparent to-emerald-500/10 rounded-full blur-3xl opacity-60"></div>
                             {/* Main Card */}
-                            <div className="relative w-full max-w-md bg-white dark:bg-[#111111] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black border border-slate-200 dark:border-white/10 overflow-hidden transform hover:-translate-y-2 transition-transform duration-500">
+                            <div className="relative w-full max-w-md bg-white dark:bg-[#111111] rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black border border-slate-200 dark:border-white/10 overflow-hidden transform hover:-translate-y-2 transition-transform duration-500">
                                 <div
                                     className="h-48 bg-cover bg-center"
                                     style={{
                                         backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKGXTWsuX_3g-bL3dRsA0TmTBURdPld-_F-kLJ8r2c2CyJXHsS-VNMozqd51G6SppqZRF2d4zlTz_v1nOilwX-aMIB2kB8cX5km5CoygBvAjfFQASrGHUGCIhImTFS7z-RFLxA11aRKuD_Hb_ew1W7shxTzhk2izXAyazqMlEYSLGIDqpgUVnahIZmG5XGpiZdL9oMKJcWlo4NOCcgx7Xq79I5OwnU-DDx0ZMKD2hb50IDNuL5teAmkmEeXwtdYjKqXMGQ-yz-bNA')`,
                                     }}
                                 >
-                                    <div className="absolute top-4 right-4 bg-[#0a0a0a]/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-emerald-400 border border-slate-200 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                                    <div className="absolute top-4 right-4 bg-white/90 dark:bg-[#0a0a0a]/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-slate-200 dark:border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                                         5,000+ Startups
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@ export default function Home() {
                                     </div>
                                     <div className="mt-6 flex justify-between items-center">
                                         <div className="text-xs text-slate-500 dark:text-slate-400">Status: <span className="text-emerald-500 font-medium">Active</span></div>
-                                        <button className="text-xs bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 text-white px-3 py-1.5 rounded-md font-semibold hover:bg-[#1a1a1a] transition-colors">View Details</button>
+                                        <button className="text-xs bg-slate-50 dark:bg-[#0a0a0a] border border-slate-200 dark:border-white/10 text-slate-700 dark:text-white px-3 py-1.5 rounded-md font-semibold hover:bg-slate-100 dark:hover:bg-[#1a1a1a] transition-colors">View Details</button>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@ export default function Home() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.1 }}
-                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
+                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                                 <span className="material-icons text-9xl text-emerald-500">rocket_launch</span>
@@ -203,13 +203,13 @@ export default function Home() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
+                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                                 <span className="material-icons text-9xl text-emerald-500">trending_up</span>
                             </div>
-                            <div className="w-14 h-14 bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-center mb-8 shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black group-hover:scale-110 transition-transform duration-300">
-                                <span className="material-icons text-white text-2xl">paid</span>
+                            <div className="w-14 h-14 bg-slate-100 dark:bg-[#1a1a1a] border border-slate-200 dark:border-white/10 rounded-xl flex items-center justify-center mb-8 shadow-xl dark:shadow-[0_15px_40px_rgba(0,0,0,0.8)] dark:shadow-black group-hover:scale-110 transition-transform duration-300">
+                                <span className="material-icons text-slate-700 dark:text-white text-2xl">paid</span>
                             </div>
                             <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-4">For Investors</h3>
                             <p className="text-slate-500 dark:text-slate-400 mb-8 text-base leading-relaxed h-20">
@@ -226,7 +226,7 @@ export default function Home() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.6, delay: 0.3 }}
-                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
+                            className="group relative bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl p-8 hover:shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black transition-all border border-slate-200 dark:border-white/5 hover:border-emerald-500/30 overflow-hidden"
                         >
                             <div className="absolute top-0 right-0 p-6 opacity-5 group-hover:opacity-10 transition-opacity">
                                 <span className="material-icons text-9xl text-emerald-500">account_balance</span>
@@ -261,7 +261,7 @@ export default function Home() {
                         >
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                                className="rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black border border-slate-200 dark:border-white/10 object-cover h-[500px] w-full"
+                                className="rounded-2xl shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black border border-slate-200 dark:border-white/10 object-cover h-[500px] w-full"
                                 alt="Modern laboratory with plants and technology"
                                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkmGqLvG8IPVlXwQ_L3nIn1aghSsGitaaKszwkxFxKoyxBqHGTLln4KWcjUiGaXz8LS8lga7cJAy-AU2bZgcgdEOLZV0UQLzpHFMhQZmbqS-gHSon3JFbXq6ZTKugI4XW5UxKZ8SuYa5kfxxAIR5WlxyS-ZXDHu3QxeTJHheeCnLEadMWKjZPJPWuLmvw01G_Rn1sKcV9b7klkF_zRCYEuN2-bq4Iimg2iZyE_eFFYRLRTSvNiWOmUvRLTXr4q9y7EBBNVMLfA3aU"
                             />

@@ -160,7 +160,7 @@ export default function DashboardPage() {
                                 { icon: "schedule", label: "Est. Completion", value: stats?.estCompletion || "N/A", color: "text-green-600", bg: "bg-green-50" },
                                 { icon: "verified", label: "Certification", value: stats?.certification || "N/A", color: "text-purple-600", bg: "bg-purple-50" },
                             ].map((stat) => (
-                                <div key={stat.label} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-4 hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-shadow">
+                                <div key={stat.label} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-4 hover:shadow-lg hover:shadow-slate-200/50 dark:hover:shadow-[0_4px_20px_rgba(0,0,0,0.5)] transition-shadow">
                                     <div className={`w-8 h-8 rounded-lg ${stat.bg} flex items-center justify-center mb-3`}>
                                         <span className={`material-icons text-lg ${stat.color}`}>{stat.icon}</span>
                                     </div>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
                                 { icon: "smart_toy", label: "AI Support", desc: "Get help with your application", link: "/dashboard/support", color: "text-green-600", bg: "bg-green-50" },
                                 { icon: "library_books", label: "Browse Schemes", desc: "Find funding opportunities", link: "/schemes", color: "text-purple-600", bg: "bg-purple-50" },
                             ].map((action) => (
-                                <Link key={action.label} href={action.link} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-5 hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-all hover:-translate-y-0.5 group">
+                                <Link key={action.label} href={action.link} className="bg-white dark:bg-[#111111] rounded-xl border border-slate-200 dark:border-white/5 p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-[0_8px_30px_rgba(0,0,0,0.6)] transition-all hover:-translate-y-0.5 group">
                                     <div className={`w-10 h-10 rounded-lg ${action.bg} flex items-center justify-center mb-3`}>
                                         <span className={`material-icons ${action.color}`}>{action.icon}</span>
                                     </div>

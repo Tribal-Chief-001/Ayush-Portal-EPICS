@@ -179,7 +179,7 @@ export default function RegisterPage() {
                     <p className="text-slate-500 dark:text-slate-400 mb-2">Your application <strong className="text-primary-dark">#{`AY-2024-${Math.floor(1000 + Math.random() * 9000)}`}</strong> has been received.</p>
                     <p className="text-sm text-slate-500 dark:text-slate-400 mb-8">Our team will review your documents within 3-5 business days. You&apos;ll receive email notifications at <strong>{form.email}</strong>.</p>
                     <div className="flex gap-3 justify-center">
-                        <Link href="/dashboard" className="px-6 py-2.5 bg-primary rounded-lg text-sm font-semibold text-slate-900 dark:text-slate-100 hover:bg-primary-dark hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
+                        <Link href="/dashboard" className="px-6 py-2.5 bg-primary rounded-lg text-sm font-semibold text-white hover:bg-primary-dark transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                             Go to Dashboard
                         </Link>
                         <Link href="/" className="px-6 py-2.5 border border-slate-200 dark:border-white/10 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:bg-[#0a0a0a]">
@@ -567,7 +567,7 @@ export default function RegisterPage() {
                                 {errors.terms && <p className="text-xs text-red-500 mt-2 ml-7">{errors.terms}</p>}
                             </div>
 
-                            <button type="submit" disabled={loading} className={`w-full py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${loading ? "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed" : "bg-primary text-slate-900 dark:text-slate-100 hover:bg-primary-dark hover:text-white shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"}`}>
+                            <button type="submit" disabled={loading} className={`w-full py-3 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${loading ? "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 cursor-not-allowed" : "bg-primary text-white hover:bg-primary-dark shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"}`}>
                                 {loading ? (
                                     <>
                                         <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
@@ -596,7 +596,7 @@ export default function RegisterPage() {
                             <div className="text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Step {currentStep + 1} of {steps.length}</div>
                             <button
                                 onClick={next}
-                                className="inline-flex items-center px-8 py-2.5 bg-primary rounded-lg text-sm font-semibold text-slate-900 dark:text-slate-100 hover:bg-primary-dark hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"
+                                className="inline-flex items-center px-8 py-2.5 bg-primary rounded-lg text-sm font-semibold text-white hover:bg-primary-dark transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30"
                             >
                                 Save & Next <span className="material-icons text-sm ml-1">arrow_forward</span>
                             </button>

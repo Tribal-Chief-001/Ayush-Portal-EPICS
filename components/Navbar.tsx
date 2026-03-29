@@ -74,7 +74,7 @@ export default function Navbar() {
                                 </button>
 
                                 {profileOpen && (
-                                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#111111] rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black border border-slate-200 dark:border-white/5 py-2 z-50">
+                                    <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-[#111111] rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black border border-slate-200 dark:border-white/5 py-2 z-50">
                                         <div className="px-4 py-3 border-b border-slate-200 dark:border-white/5">
                                             <p className="text-sm font-semibold text-slate-900 dark:text-slate-100">{user.name}</p>
                                             <p className="text-xs text-slate-500 dark:text-slate-400">{user.email}</p>
@@ -112,7 +112,7 @@ export default function Navbar() {
                                 <div className="flex items-center">
                                     <Link href="/login" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-emerald-400 px-3 py-2 transition-colors">Login</Link>
                                 </div>
-                                <Link href="/register" className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-slate-900 dark:text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all shadow-[0_4px_20px_rgba(0,0,0,0.5)] shadow-primary/30">
+                                <Link href="/register" className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary-dark hover:text-white transition-all shadow-md dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)] dark:shadow-primary/30">
                                     Register Startup
                                 </Link>
                             </>
@@ -153,7 +153,7 @@ export default function Navbar() {
                     ) : (
                         <>
                             <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="block text-sm font-medium text-slate-500 dark:text-slate-400 py-2">Login</Link>
-                            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="block text-center px-5 py-2.5 text-sm font-medium rounded-lg text-slate-900 dark:text-slate-100 bg-primary hover:bg-primary-dark hover:text-white transition-all">
+                            <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="block text-center px-5 py-2.5 text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary-dark hover:text-white transition-all">
                                 Register Startup
                             </Link>
                         </>

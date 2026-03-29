@@ -415,14 +415,14 @@ export default function InvestorsPage() {
             {osintModalOpen && (
                 <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
                     <div className="bg-slate-50 dark:bg-[#0a0a0a] rounded-2xl w-full max-w-6xl max-h-[90vh] flex flex-col overflow-hidden shadow-2xl border border-slate-800 ring-1 ring-white/5 font-sans">
-                        <div className="bg-[#111] p-5 border-b border-slate-800 flex justify-between items-center">
+                        <div className="bg-slate-100 dark:bg-[#111] p-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
                             <div className="flex items-center gap-3">
-                                <Cpu className="w-6 h-6 text-emerald-400 animate-pulse" />
-                                <h2 className="text-white font-bold tracking-widest uppercase text-sm flex items-center gap-2">
+                                <Cpu className="w-6 h-6 text-emerald-600 dark:text-emerald-400 animate-pulse" />
+                                <h2 className="text-slate-900 dark:text-white font-bold tracking-widest uppercase text-sm flex items-center gap-2">
                                     OSINT Intelligence Suite <span className="text-slate-500 dark:text-slate-400">|</span> <span className="text-emerald-400">{osintStartup?.name}</span>
                                 </h2>
                             </div>
-                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-500 dark:text-slate-400 hover:text-white transition-colors">
+                            <button onClick={() => setOsintModalOpen(false)} className="text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors">
                                 <span className="material-icons">close</span>
                             </button>
                         </div>
@@ -447,7 +447,7 @@ export default function InvestorsPage() {
                             ) : osintResult ? (
                                 <div className="p-4 sm:p-8 space-y-6 sm:space-y-8 bg-slate-50 dark:bg-[#0a0a0a] text-slate-700 dark:text-slate-300 animate-fade-in">
                                     {/* Exec Summary */}
-                                    <div className="bg-[#111] border border-slate-800/80 rounded-xl p-5 sm:p-8 relative overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
+                                    <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800/80 rounded-xl p-5 sm:p-8 relative overflow-hidden shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black">
                                         <div className="absolute top-0 left-0 w-1 h-full bg-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.8)]"></div>
                                         <h3 className="text-emerald-400 font-mono text-xs uppercase tracking-widest mb-4 flex items-center gap-2"><Globe className="w-4 h-4"/> Executive Summary</h3>
                                         <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm md:text-base font-light">{osintResult.executiveSummary}</p>
@@ -457,7 +457,7 @@ export default function InvestorsPage() {
                                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                                         
                                         {/* Growth Trend Area Chart */}
-                                        <div className="lg:col-span-2 bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
+                                        <div className="lg:col-span-2 bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black">
                                             <div className="flex justify-between items-center mb-6 border-b border-slate-800 pb-4">
                                                 <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><LineChart className="w-4 h-4 text-sky-400"/> Growth Kinetics</h3>
                                                 <span className="text-emerald-400 font-mono text-xl font-bold">+{osintResult.metrics?.projectedGrowth}% YoY</span>
@@ -480,10 +480,10 @@ export default function InvestorsPage() {
                                         </div>
 
                                         {/* Sentiment Pie */}
-                                        <div className="bg-[#111] border border-slate-800 rounded-xl p-6 flex flex-col shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black">
+                                        <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800 rounded-xl p-6 flex flex-col shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black">
                                             <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
                                                 <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><PieIcon className="w-4 h-4 text-purple-400"/> Web Sentiment</h3>
-                                                <span className="text-white font-mono text-xl font-bold">{osintResult.metrics?.sentiment?.score}/100</span>
+                                                <span className="text-slate-900 dark:text-white font-mono text-xl font-bold">{osintResult.metrics?.sentiment?.score}/100</span>
                                             </div>
                                             <div className="flex-1 min-h-[200px] relative w-full flex items-center justify-center -mt-2">
                                                 <ResponsiveContainer width="100%" height="100%">
@@ -512,7 +512,7 @@ export default function InvestorsPage() {
                                             </div>
                                             <div className="grid grid-cols-3 gap-2 text-center mt-2 border-t border-slate-800 pt-4">
                                                 <div><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Pos</p><p className="text-emerald-400 font-mono text-sm">{osintResult.metrics?.sentiment?.positive}%</p></div>
-                                                <div className="border-l border-r border-slate-800"><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Neu</p><p className="text-slate-500 dark:text-slate-400 font-mono text-sm">{osintResult.metrics?.sentiment?.neutral}%</p></div>
+                                                <div className="border-l border-r border-slate-200 dark:border-slate-800"><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Neu</p><p className="text-slate-500 dark:text-slate-400 font-mono text-sm">{osintResult.metrics?.sentiment?.neutral}%</p></div>
                                                 <div><p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase">Neg</p><p className="text-rose-400 font-mono text-sm">{osintResult.metrics?.sentiment?.negative}%</p></div>
                                             </div>
                                         </div>
@@ -522,7 +522,7 @@ export default function InvestorsPage() {
                                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                                         
                                         {/* Radar Risk Matrix */}
-                                        <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black flex flex-col">
+                                        <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black flex flex-col">
                                             <div className="flex justify-between items-center mb-2 border-b border-slate-800 pb-4">
                                                 <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><ShieldAlert className="w-4 h-4 text-rose-400"/> Risk Matrix</h3>
                                                 <span className={`px-3 py-1 text-xs font-bold rounded shadow-[0_15px_40px_rgba(0,0,0,0.8)] shadow-black ${['Critical', 'High'].includes(osintResult.riskAnalysis?.overall) ? 'border border-rose-500/30 text-rose-400 bg-rose-500/10 shadow-rose-900/20' : osintResult.riskAnalysis?.overall === 'Moderate' ? 'border border-amber-500/30 text-amber-400 bg-amber-500/10 shadow-amber-900/20' : 'border border-emerald-500/30 text-emerald-400 bg-emerald-500/10 shadow-emerald-900/20'}`}>
@@ -547,7 +547,7 @@ export default function InvestorsPage() {
 
                                         {/* Competitors & Founder Info */}
                                         <div className="space-y-6">
-                                            <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black relative overflow-hidden">
+                                            <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black relative overflow-hidden">
                                                 <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl"></div>
                                                 <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest mb-5 flex items-center gap-2 border-b border-slate-800 pb-4"><Target className="w-4 h-4 text-amber-400"/> Competitor Mapping</h3>
                                                 <div className="space-y-3">
@@ -565,7 +565,7 @@ export default function InvestorsPage() {
                                                 </div>
                                             </div>
 
-                                            <div className="bg-[#111] border border-slate-800 rounded-xl p-6 shadow-[0_20px_50px_rgba(0,0,0,0.9)] shadow-black shadow-black relative overflow-hidden">
+                                            <div className="bg-white dark:bg-[#111] border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-2xl shadow-slate-200/50 dark:shadow-[0_20px_50px_rgba(0,0,0,0.9)] dark:shadow-black relative overflow-hidden">
                                                 <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500/0 via-blue-500 to-blue-500/0"></div>
                                                 <div className="flex justify-between items-center mb-4 border-b border-slate-800 pb-4">
                                                     <h3 className="text-slate-500 dark:text-slate-400 font-mono text-xs uppercase tracking-widest flex items-center gap-2"><Users className="w-4 h-4 text-blue-400"/> Founder Intelligence</h3>
