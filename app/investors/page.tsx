@@ -36,7 +36,9 @@ export default function InvestorsPage() {
     const isDark = theme === "dark";
     
     const [startups, setStartups] = useState<Startup[]>([]);
+    const [recommendations, setRecommendations] = useState<(Startup & { aiReason: string })[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [recsLoading, setRecsLoading] = useState(false);
     
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedSectors, setSelectedSectors] = useState<Set<string>>(new Set());
@@ -91,12 +93,29 @@ export default function InvestorsPage() {
         }
     };
 
+    const fetchRecommendations = async () => {
+        if (status !== "authenticated") return;
+        setRecsLoading(true);
+        try {
+            const res = await fetch("/api/recommendations");
+            if (res.ok) {
+                const data = await res.json();
+                setRecommendations(data.recommendations || []);
+            }
+        } catch (error) {
+            console.error("Failed to fetch recommendations:", error);
+        } finally {
+            setRecsLoading(false);
+        }
+    };
+
     useEffect(() => {
         fetchStartups();
     }, [fetchStartups]);
 
     useEffect(() => {
         fetchBookmarks();
+        fetchRecommendations();
     }, [status]);
 
     const toggleBookmark = async (id: string) => {
@@ -242,6 +261,68 @@ export default function InvestorsPage() {
             </nav>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                {/* AI Recommendations Section */}
+                {status === "authenticated" && (recommendations.length > 0 || recsLoading) && (
+                    <div className="mb-12">
+                        <div className="flex items-center justify-between mb-6">
+                            <div className="flex items-center gap-2">
+                                <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg shadow-lg shadow-indigo-500/20">
+                                    <span className="material-icons text-white text-xl">auto_awesome</span>
+                                </div>
+                                <div>
+                                    <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Recommended for You</h2>
+                                    <p className="text-xs text-slate-500 dark:text-slate-400">AI-powered suggestions based on your investment cues and bookmarks</p>
+                                </div>
+                            </div>
+                            <div className="hidden sm:flex items-center gap-1 px-3 py-1 bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-100 dark:border-indigo-500/20 rounded-full text-[10px] font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">
+                                <span className="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse"></span>
+                                Live Engine
+                            </div>
+                        </div>
+
+                        {recsLoading ? (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {[1, 2, 3].map((i) => (
+                                    <div key={i} className="h-48 rounded-2xl bg-white dark:bg-[#111111] border border-slate-200 dark:border-white/5 animate-pulse"></div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                {recommendations.map((startup, idx) => (
+                                    <div 
+                                        key={startup.id} 
+                                        className="group relative bg-white dark:bg-[#111111] rounded-2xl p-6 border border-slate-200 dark:border-white/5 hover:border-indigo-500/50 dark:hover:border-indigo-500/50 transition-all hover:shadow-2xl hover:shadow-indigo-500/10 dark:hover:shadow-[0_20px_50px_rgba(0,0,0,0.8)] dark:hover:shadow-black"
+                                    >
+                                        <div className="flex justify-between items-start mb-4">
+                                            <div className="w-12 h-12 bg-indigo-50 dark:bg-indigo-500/10 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 font-bold text-xl ring-1 ring-indigo-200 dark:ring-indigo-500/30">
+                                                {startup.name.charAt(0)}
+                                            </div>
+                                            <span className="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-500/10 text-[10px] font-bold text-indigo-600 dark:text-indigo-400 rounded-md uppercase tracking-tighter">AI Suggestion</span>
+                                        </div>
+                                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100 mb-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{startup.name}</h3>
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <span className="text-xs text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                                <span className="material-icons text-[14px]">spa</span> {startup.sector}
+                                            </span>
+                                            <span className="w-1 h-1 rounded-full bg-slate-300 dark:bg-slate-700"></span>
+                                            <span className="text-xs text-slate-500 dark:text-slate-400">{startup.stage}</span>
+                                        </div>
+                                        <div className="relative mt-4 p-3 bg-slate-50 dark:bg-[#0a0a0a] rounded-xl border border-dashed border-indigo-200 dark:border-indigo-500/30 overflow-hidden">
+                                            <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+                                            <p className="text-xs text-slate-600 dark:text-slate-300 italic leading-relaxed">
+                                                <span className="font-bold text-indigo-600 dark:text-indigo-400 non-italic">AI Why:</span> {startup.aiReason}
+                                            </p>
+                                        </div>
+                                        <button className="w-full mt-6 py-2.5 bg-slate-900 dark:bg-indigo-600 text-white dark:text-white rounded-xl text-xs font-bold hover:bg-slate-800 dark:hover:bg-indigo-700 transition-all">
+                                            Review Intelligence Report
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+
                 <div className="flex gap-8">
                     {/* Sidebar Filters */}
                     <aside className="w-64 flex-shrink-0 hidden lg:block">
