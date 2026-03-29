@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useRef, FormEvent } from "react";
+import { useState, useRef, FormEvent, useEffect, useCallback } from "react";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { useRouter } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { useToast } from "@/context/ToastContext";
 
 const steps = ["BASIC INFO", "BUSINESS DETAILS", "DOCUMENTS", "REVIEW"];
